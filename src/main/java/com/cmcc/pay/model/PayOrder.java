@@ -361,4 +361,5 @@ public class PayOrder implements Serializable {
     public void setRiskInfo(String riskInfo) {
         this.riskInfo = riskInfo;
     }
+
 }
