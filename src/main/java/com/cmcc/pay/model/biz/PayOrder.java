@@ -1,4 +1,4 @@
-package com.cmcc.pay.model;
+package com.cmcc.pay.model.biz;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -20,5 +20,9 @@
     </environments>
     <mappers>
         <mapper resource="mybatis/mappers/PeopleMapper.xml"/>
+        <mapper resource="mybatis/mappers/account/PayOrderMapper.xml"/>
+        <mapper resource="mybatis/mappers/account/PaySettleMapper.xml"/>
+        <mapper resource="mybatis/mappers/account/PaySettleSummaryMapper.xml"/>
+
     </mappers>
 </configuration>

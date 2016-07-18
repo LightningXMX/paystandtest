@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmcc.pay.mapper.PaySettleSummaryMapper" >
+  <resultMap id="BaseResultMap" type="com.cmcc.pay.model.biz.PaySettleSummary" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="platform_id" property="platformId" jdbcType="VARCHAR" />
+    <result column="settleid" property="settleid" jdbcType="VARCHAR" />
+    <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+    <result column="product_type" property="productType" jdbcType="INTEGER" />
+    <result column="transfer_type" property="transferType" jdbcType="INTEGER" />
+    <result column="settle_channel" property="settleChannel" jdbcType="INTEGER" />
+    <result column="total_fee" property="totalFee" jdbcType="BIGINT" />
+    <result column="income_fee" property="incomeFee" jdbcType="BIGINT" />
+    <result column="merchant_fee" property="merchantFee" jdbcType="BIGINT" />
+    <result column="service_fee" property="serviceFee" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="settle_period" property="settlePeriod" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <!--<resultMap id="BaseResultMap1" type="com.cmcc.pay.model.admin.PaySettleReport" >-->
+    <!--<result column="platform_id" property="platformId" jdbcType="VARCHAR" />-->
+    <!--<result column="merchant_id" property="merchantId" jdbcType="BIGINT" />-->
+    <!--<result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />-->
+    <!--<result column="sumSummaryPrice" property="sumSummaryPrice" jdbcType="DECIMAL" />-->
+    <!--<result column="sumSummaryInPrice" property="sumSummaryInPrice" jdbcType="DECIMAL" />-->
+    <!--<result column="type" property="type" jdbcType="INTEGER" />-->
+    <!--<result column="product_type" property="productType" jdbcType="INTEGER" />-->
+    <!--<result column="transfer_type" property="transferType" jdbcType="INTEGER" />-->
+    <!--<result column="account_type" property="accountType" jdbcType="INTEGER" />-->
+  <!--</resultMap>-->
+  
+  <!--<resultMap id="BaseResultMap2" type="com.cmcc.pay.model.admin.PayTransferReport" >-->
+    <!--<result column="settleid" property="settleid" jdbcType="VARCHAR" />-->
+    <!--<result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />-->
+    <!--<result column="totalFee" property="totalFee" jdbcType="DECIMAL" />-->
+    <!--<result column="serviceFee" property="serviceFee" jdbcType="DECIMAL" />-->
+    <!--<result column="product_type" property="productType" jdbcType="INTEGER" />-->
+    <!--<result column="transfer_type" property="transferType" jdbcType="INTEGER" />-->
+    <!--<result column="account_type" property="accountType" jdbcType="INTEGER" />-->
+  <!--</resultMap>-->
+  
+  <sql id="Base_Column_List" >
+    id, platform_id, product_type, transfer_type, settle_channel, settleid, merchant_id, total_fee, income_fee, merchant_fee, service_fee, type, 
+    settle_period, status, audit_date, create_time, update_time, delete_flag
+  </sql>
+  <sql id="Basic_Conditions" >
+    <where>
+        <if test="id != null" >
+           and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="settleid != null" >
+           and settleid = #{settleid,jdbcType=VARCHAR}
+        </if>
+        <if test="platformId != null" >
+           and platform_id = #{platformId,jdbcType=BIGINT}
+        </if>
+        <if test="merchantId != null" >
+           and merchant_id = #{merchantId,jdbcType=BIGINT}
+        </if>
+        <if test="totalFee != null" >
+           and total_fee = #{totalFee,jdbcType=BIGINT}
+        </if>
+        <if test="incomeFee != null" >
+           and income_fee = #{incomeFee,jdbcType=BIGINT}
+        </if>
+        <if test="merchantFee != null" >
+           and merchant_fee = #{merchantFee,jdbcType=BIGINT}
+        </if>
+        <if test="serviceFee != null" >
+           and service_fee = #{serviceFee,jdbcType=BIGINT}
+        </if>
+        <if test="type != null" >
+           and type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="settleChannel != null" >
+           and settle_channel = #{settleChannel,jdbcType=INTEGER}
+        </if>
+        <if test="settlePeriod != null" >
+           and settle_period = #{settlePeriod,jdbcType=INTEGER}
+        </if>
+        <if test="status != null" >
+           and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="auditDate != null" >
+           and audit_date = to_days(#{auditDate,jdbcType=TIMESTAMP})
+        </if>
+        <if test="createTime != null" >
+           AND to_days(create_time) = to_days(#{createTime,jdbcType=TIMESTAMP})
+        </if>
+        <if test="updateTime != null" >
+           and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        and delete_flag = 0
+    </where>
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.cmcc.pay.model.biz.PaySettleSummary" >
+    select 
+    <include refid="Base_Column_List" />
+    from pay_settle_summary
+    <include refid="Basic_Conditions" />
+    limit 0,1
+  </select>
+  
+  <select id="getAllPassAppeal" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_settle_summary
+    where 1=1 
+    and delete_flag = 0
+    <if test="status != null" >
+        and status=#{status,jdbcType=INTEGER} 
+    </if>
+    <if test="settleChannel != null" >
+        and settle_channel=#{settleChannel,jdbcType=INTEGER}
+    </if>
+    <if test="transferType != null" >
+        and (transfer_type=0 or transfer_type=2)
+    </if>
+  </select>
+  
+  <!-- 结算报表-结入结出额 -->
+  <!--<select id="selectSumSummPrice" resultMap="BaseResultMap1" parameterType="java.util.Map">-->
+    <!--select s.platform_id, s.merchant_id, m.merchant_name, s.type, cast(sum(s.total_fee)/100 as decimal(10,2)) as sumSummaryPrice,-->
+    <!--cast(sum(s.income_fee)/100 as decimal(10,2)) as sumSummaryInPrice,-->
+    <!--s.product_type, s.transfer_type, a.account_type-->
+    <!--from pay_settle_summary s-->
+    <!--left join pay_merchant m on s.platform_id = m.platform_id and s.merchant_id = m.merchant_id, pay_platform_account a-->
+    <!--where s.platform_id = a.platformid and s.merchant_id = a.merchant_id and s.product_type = a.product_type and s.type = a.pay_type-->
+    <!--and s.delete_flag = 0-->
+    <!--<if test="platformId != null">-->
+      <!--and s.platform_id = #{platformId, jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--<if test="settleChannel != null">-->
+      <!--and s.settle_channel = #{settleChannel, jdbcType=INTEGER}-->
+      <!--<if test="settleChannel == 1">-->
+        <!--<![CDATA[and s.income_fee > 0]]>-->
+      <!--</if>-->
+    <!--</if>-->
+    <!--<if test="startTime != null">-->
+        <!--<![CDATA[and DATE_FORMAT(s.audit_date, '%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}]]>-->
+    <!--</if>-->
+    <!--<if test="endTime != null">-->
+        <!--<![CDATA[and DATE_FORMAT(s.audit_date, '%Y-%m-%d') <= #{endTime,jdbcType=VARCHAR}]]>-->
+    <!--</if>-->
+    <!--group by s.merchant_id, s.type, s.product_type, s.transfer_type, a.account_type-->
+  <!--</select>-->
+  
+   <!--  转账表里settleid对应summary表查业务类型 -->
+   <!--<select id="selectMerNameByIds" resultMap="BaseResultMap2" parameterType="java.util.Map">-->
+    <!--select s.settleid, cast(s.total_fee/100 as decimal(10,2)) as totalFee, -->
+    <!--cast(s.service_fee/100 as decimal(10,2)) as serviceFee, s.product_type, s.transfer_type, a.account_type-->
+    <!--from pay_settle_summary s, pay_platform_account a-->
+    <!--where s.platform_id = a.platformid and s.merchant_id = a.merchant_id and s.product_type = a.product_type and s.type = a.pay_type-->
+    <!--and s.settleid in-->
+     <!--<foreach item="item" index="index" collection="settleids" open="(" separator="," close=")">  -->
+       <!--#{item}  -->
+     <!--</foreach>-->
+  <!--</select>-->
+  
+  <select id="selectBySettleids" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_settle_summary
+    where delete_flag=0 
+    and settleid in
+    <foreach item="item" index="index" collection="settleids" open="(" separator="," close=")">  
+       #{item}  
+    </foreach>
+  </select>
+  
+  <select id="selectBySettleid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_settle_summary
+    where settleid=#{settleid,jdbcType=VARCHAR}
+    and delete_flag=0
+  </select>
+  
+  <select id="selectByTimeOther" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select s.id, s.platform_id, s.product_type, s.transfer_type, s.settle_channel, s.settleid, s.merchant_id, s.total_fee, s.income_fee, s.merchant_fee, 
+    s.service_fee, s.type, s.settle_period, s.status, s.audit_date, s.create_time, s.update_time, s.delete_flag 
+    from pay_settle_summary s, pay_platform_account a
+    where s.delete_flag = 0 
+    and s.platform_id = a.platformid and s.merchant_id = a.merchant_id and s.product_type = a.product_type and s.type = a.pay_type
+    <if test="platformId != null">
+      and s.platform_id = #{platformId,jdbcType=VARCHAR}
+    </if>
+    <if test="merchantId != null">
+      and s.merchant_id = #{merchantId,jdbcType=BIGINT}
+    </if>
+    <if test="payType != null">
+     and s.type = #{payType,jdbcType=INTEGER}
+    </if>
+    <if test="accountType != null">
+     and a.account_type = #{accountType,jdbcType=INTEGER}
+    </if>
+    <if test="transferType != null">
+     and a.transfer_type = #{transferType,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null">
+        <![CDATA[and DATE_FORMAT(s.audit_date, '%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="endTime != null">
+        <![CDATA[and DATE_FORMAT(s.audit_date, '%Y-%m-%d') <= #{startTime,jdbcType=VARCHAR}]]>
+    </if> 
+  </select>
+  
+  <select id="queryByDate" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from pay_settle_summary
+    where delete_flag = 0
+    <if test="platformId != null">
+      and platform_id = #{platformId,jdbcType=VARCHAR}
+    </if>
+    <if test="settleChannel != null">
+     and settle_channel = #{settleChannel,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null">
+        AND audit_date >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')  
+    </if>
+    <if test="endTime != null">
+    <![CDATA[ AND audit_date < STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>
+    </if> 
+    order by audit_date desc    
+  </select>
+  
+  <select id="queryBySettleTime" parameterType="java.lang.String" resultType="java.lang.Integer" >
+    select count(*)
+    from pay_settle_summary
+    where delete_flag = 0
+    AND to_days(create_time) = to_days(STR_TO_DATE(#{createTime,jdbcType=VARCHAR},'%Y%c%d'))
+  </select>
+  
+  <update id="updateStatusByPrimaryKey" parameterType="java.util.Map" >
+    update pay_settle_summary set status=#{status,jdbcType=INTEGER},update_time=now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into pay_settle_summary (platform_id, settleid, merchant_id, 
+      product_type, transfer_type, settle_channel, 
+      total_fee, income_fee, merchant_fee, 
+      service_fee, type, settle_period, 
+      status, audit_date, create_time, 
+      update_time) values
+      <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.platformId,jdbcType=VARCHAR}, #{item.settleid,jdbcType=VARCHAR}, #{item.merchantId,jdbcType=BIGINT}, 
+      #{item.productType,jdbcType=INTEGER}, #{item.transferType,jdbcType=INTEGER}, #{item.settleChannel,jdbcType=INTEGER},
+      #{item.totalFee,jdbcType=BIGINT}, #{item.incomeFee,jdbcType=BIGINT}, #{item.merchantFee,jdbcType=BIGINT}, 
+      #{item.serviceFee,jdbcType=BIGINT}, #{item.type,jdbcType=INTEGER}, #{item.settlePeriod,jdbcType=INTEGER}, 
+      #{item.status,jdbcType=INTEGER}, #{item.auditDate,jdbcType=TIMESTAMP},
+      <if test="item.createTime == null">
+      now(),
+      </if> 
+      <if test="item.createTime != null">
+      #{item.createTime,jdbcType=TIMESTAMP},
+      </if> 
+      now())
+      </foreach>
+  </insert>
+     <select id="querySettleCount" resultType="com.cmcc.pay.model.biz.PaySettleSummary" >
+    select 
+    IFNULL(sum(a.total_fee),0) as totalFee,IFNULL(sum(a.income_fee),0) as incomeFee,
+    IFNULL(sum(a.merchant_fee),0) as merchantFee,IFNULL(sum(a.service_fee),0) as serviceFee
+    from pay_settle_summary  a ,pay_platform_account p
+    where p.platformid =a.platform_id and p.merchant_id=a.merchant_id and
+         p.product_type=a.product_type and p.pay_type=a.type and a.delete_flag = 0
+    <if test="paySettleSummary.createTime != null">  
+         AND DATE_FORMAT(a.create_time,'%Y-%m-%d') = DATE_FORMAT(#{paySettleSummary.createTime},'%Y-%m-%d')
+    </if>  
+    <if test="paySettleSummary.status != null">  
+         AND a.status = #{paySettleSummary.status}
+    </if>
+    <if test="paySettleSummary.platformId != null">
+        AND a.platform_id = #{paySettleSummary.platformId}
+    </if>
+    <if test="payMerchantList != null">  
+        AND a.merchant_id in
+     <foreach item="item" index="index" collection="payMerchantList" open="(" separator="," close=")">  
+      #{item}  
+     </foreach>
+     </if>
+         AND ((p.account_type=0 AND a.settle_channel=0) ||(p.account_type=1 AND a.settle_channel=1))
+  </select>
+    <select id="selectByQuery" resultMap="BaseResultMap" >
+    select 
+    settleid,total_fee,income_fee,merchant_fee,service_fee
+    from pay_settle_summary
+    where delete_flag = 0 
+    <if test="paySettleSummary.createTime != null">  
+         AND DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{paySettleSummary.createTime},'%Y-%m-%d')
+    </if>
+      <if test="paySettleSummary.platformId != null">
+        AND platform_id = #{paySettleSummary.platformId}
+      </if>
+    <if test="paySettleSummary.status != null">  
+         AND status = #{paySettleSummary.status}
+    </if> 
+    <if test="payMerchantList != null">  
+        AND merchant_id in  
+     <foreach item="item" index="index" collection="payMerchantList" open="(" separator="," close=")">  
+      #{item}  
+     </foreach>
+     </if>  
+  </select>
+  
+  <update id="updateByMerchantId">
+    update pay_settle_summary set
+    status = #{paySettleSummary.status}
+    where delete_flag = 0 
+    <if test="paySettleSummary.createTime != null">  
+         AND DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(#{paySettleSummary.createTime},'%Y-%m-%d')
+    </if>
+    <if test="paySettleSummary.platformId != null">
+      AND platform_id =#{paySettleSummary.platformId}
+    </if>
+    <if test="payMerchantList != null">  
+        AND merchant_id in  
+     <foreach item="item" index="index" collection="payMerchantList" open="(" separator="," close=")">  
+      #{item}  
+     </foreach>
+     </if>  
+  </update>
+  
+  <select id="selectForRefundParam" parameterType="java.util.Map" resultType="java.lang.Long">
+    select id from pay_settle_summary 
+    where settleid like #{settleid,jdbcType=VARCHAR} and merchant_id=#{merchantId,jdbcType=BIGINT}
+    and platform_id=#{platformId,jdbcType=VARCHAR}
+    and product_type=#{productType,jdbcType=INTEGER}
+    and settle_channel=#{settleChannel,jdbcType=INTEGER}
+    and type=#{type,jdbcType=INTEGER}
+    and settle_period=#{settlePeriod,jdbcType=INTEGER} and delete_flag = 0
+  </select>
+  
+  <update id="updateFeeWithRefund" parameterType="com.cmcc.pay.model.biz.PaySettle">
+        update pay_settle_summary
+         set
+         total_fee=(total_fee-#{totalFee,jdbcType=BIGINT}),
+         income_fee=(income_fee-#{incomeFee,jdbcType=BIGINT}),
+         merchant_fee=(merchant_fee-#{merchantFee,jdbcType=BIGINT}),
+         service_fee=(service_fee-#{serviceFee,jdbcType=BIGINT}),
+         update_time=now()
+         where id =#{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateFeeWithSettlePeriodChanged" parameterType="com.cmcc.pay.model.biz.PaySettle">
+        update pay_settle_summary
+         set
+         <if test="mark == 1">
+         total_fee=(total_fee+#{totalFee,jdbcType=BIGINT}),
+         income_fee=(income_fee+#{incomeFee,jdbcType=BIGINT}),
+         merchant_fee=(merchant_fee+#{merchantFee,jdbcType=BIGINT}),
+         service_fee=(service_fee+#{serviceFee,jdbcType=BIGINT}),
+         </if>
+         <if test="mark == 0">
+         total_fee=(total_fee-#{totalFee,jdbcType=BIGINT}),
+         income_fee=(income_fee-#{incomeFee,jdbcType=BIGINT}),
+         merchant_fee=(merchant_fee-#{merchantFee,jdbcType=BIGINT}),
+         service_fee=(service_fee-#{serviceFee,jdbcType=BIGINT}),
+         </if>
+         settle_period=#{settlePeriod,jdbcType=INTEGER},
+         <if test="auditDate != null">
+         audit_date = #{auditDate,jdbcType=TIMESTAMP},
+         </if>
+         update_time=now()
+         where id =#{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

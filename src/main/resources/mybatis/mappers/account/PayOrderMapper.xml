@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cmcc.pay.dao.PayOrderMapper" >
-    <resultMap id="BaseResultMap" type="com.cmcc.pay.model.PayOrder" >
+<mapper namespace="com.cmcc.pay.mapper.PayOrderMapper" >
+    <resultMap id="BaseResultMap" type="com.cmcc.pay.model.biz.PayOrder" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="orderid" property="orderid" jdbcType="VARCHAR" />
         <result column="transactionid" property="transactionid" jdbcType="VARCHAR" />
@@ -35,40 +35,40 @@
         <result column="status" property="status" jdbcType="INTEGER" />
     </resultMap>
 
-    <resultMap id="BaseResultMap1" type="com.cmcc.pay.model.admin.PaySettleReport" >
-        <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
-        <result column="sumOrderPrice" property="sumOrderPrice" jdbcType="DECIMAL" />
-        <result column="sumRefundPrice" property="sumRefundPrice" jdbcType="DECIMAL" />
-        <result column="type" property="type" jdbcType="INTEGER" />
-        <result column="platformId" property="platformId" jdbcType="VARCHAR" />
-        <result column="merchantId" property="merchantId" jdbcType="BIGINT" />
-        <result column="merchantName" property="merchantName" jdbcType="VARCHAR" />
-        <result column="account_type" property="accountType" jdbcType="INTEGER" />
-        <result column="transfer_type" property="transferType" jdbcType="INTEGER" />
-        <result column="product_type" property="productType" jdbcType="INTEGER" />
-    </resultMap>
+    <!--<resultMap id="BaseResultMap1" type="com.cmcc.pay.model.admin.PaySettleReport" >-->
+        <!--<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />-->
+        <!--<result column="sumOrderPrice" property="sumOrderPrice" jdbcType="DECIMAL" />-->
+        <!--<result column="sumRefundPrice" property="sumRefundPrice" jdbcType="DECIMAL" />-->
+        <!--<result column="type" property="type" jdbcType="INTEGER" />-->
+        <!--<result column="platformId" property="platformId" jdbcType="VARCHAR" />-->
+        <!--<result column="merchantId" property="merchantId" jdbcType="BIGINT" />-->
+        <!--<result column="merchantName" property="merchantName" jdbcType="VARCHAR" />-->
+        <!--<result column="account_type" property="accountType" jdbcType="INTEGER" />-->
+        <!--<result column="transfer_type" property="transferType" jdbcType="INTEGER" />-->
+        <!--<result column="product_type" property="productType" jdbcType="INTEGER" />-->
+    <!--</resultMap>-->
 
-    <resultMap id="BaseResultMap2" type="com.cmcc.pay.model.admin.PayOrderReport" >
-        <result column="platformid" property="platformId" jdbcType="VARCHAR" />
-        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
-        <result column="orderid" property="orderId" jdbcType="VARCHAR" />
-        <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
-        <result column="third_orderid" property="thirdOrderid" jdbcType="VARCHAR" />
-        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
-        <result column="product_name" property="productName" jdbcType="VARCHAR" />
-        <result column="type" property="type" jdbcType="INTEGER" />
-        <result column="price" property="price" jdbcType="DECIMAL" />
-        <result column="settle_period" property="settlePeriod" jdbcType="INTEGER" />
-        <result column="account_type" property="accountType" jdbcType="INTEGER" />
-        <result column="transfer_type" property="transferType" jdbcType="INTEGER" />
-        <result column="product_type" property="productType" jdbcType="INTEGER" />
-    </resultMap>
+    <!--<resultMap id="BaseResultMap2" type="com.cmcc.pay.model.admin.PayOrderReport" >-->
+        <!--<result column="platformid" property="platformId" jdbcType="VARCHAR" />-->
+        <!--<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />-->
+        <!--<result column="orderid" property="orderId" jdbcType="VARCHAR" />-->
+        <!--<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />-->
+        <!--<result column="third_orderid" property="thirdOrderid" jdbcType="VARCHAR" />-->
+        <!--<result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />-->
+        <!--<result column="product_name" property="productName" jdbcType="VARCHAR" />-->
+        <!--<result column="type" property="type" jdbcType="INTEGER" />-->
+        <!--<result column="price" property="price" jdbcType="DECIMAL" />-->
+        <!--<result column="settle_period" property="settlePeriod" jdbcType="INTEGER" />-->
+        <!--<result column="account_type" property="accountType" jdbcType="INTEGER" />-->
+        <!--<result column="transfer_type" property="transferType" jdbcType="INTEGER" />-->
+        <!--<result column="product_type" property="productType" jdbcType="INTEGER" />-->
+    <!--</resultMap>-->
 
     <sql id="Base_Column_List" >
         id, orderid, transactionid, transaction_date, ordertype, orderinfo, account_code,
         account_type, pay_period, trade_no, third_orderid, failurereasons, platformid, price,
         type, pay_time, create_time, update_time, return_url, notify_url, delete_flag, merchantid,
-        productid,royalty_flag,digest_alg,pro_count,merchant_url,order_type,merge_info,status
+        productid,royalty_flag,digest_alg,pro_count,merchant_url,order_type,status
     </sql>
     <sql id="Basic_Conditions" >
         <![CDATA[where delete_flag = false]]>
@@ -163,14 +163,14 @@
         from pay_order
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <select id="select" resultMap="BaseResultMap" parameterType="com.cmcc.pay.model.PayOrder" >
+    <select id="select" resultMap="BaseResultMap" parameterType="com.cmcc.pay.model.biz.PayOrder" >
         select
         <include refid="Base_Column_List" />
         from pay_order
         <include refid="Basic_Conditions" />
         limit 0,1
     </select>
-    <insert id="insert" parameterType="com.cmcc.pay.model.PayOrder" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.cmcc.pay.model.biz.PayOrder" useGeneratedKeys="true" keyProperty="id" >
         insert into pay_order(id, orderid, transactionid,
         transaction_date, ordertype, orderinfo,
         account_code, account_type, pay_period,
@@ -212,7 +212,7 @@
         )
     </insert>
 
-    <insert id="insertBatch" parameterType="java.util.List" >
+    <insert id="batchInsert" parameterType="java.util.List" >
         insert into pay_order (
         id, orderid, transactionid,
         transaction_date, ordertype, orderinfo,
@@ -222,7 +222,7 @@
         pay_time, create_time, update_time,
         return_url, notify_url, delete_flag,
         merchantid, productid, digest_alg,
-        royalty_flag, merchant_url, order_type, merge_info
+        royalty_flag, merchant_url, order_type, status
         )
         values
         <foreach collection="list" item="payorder" index="index" separator=",">
@@ -254,438 +254,438 @@
             <if test="payorder.orderType != null">
                 #{payorder.orderType,jdbcType=INTEGER},
             </if>
-            #{payorder.mergeInfo,jdbcType=VARCHAR}
+            #{payorder.status,jdbcType=INTEGER}
             )
         </foreach>
 
     </insert>
-    <update id="update" parameterType="com.cmcc.pay.model.PayOrder" >
-        update pay_order
-        <set >
-            <if test="orderid != null">
-                orderid = #{orderid,jdbcType=VARCHAR},
-            </if>
-            <if test="transactionid != null">
-                transactionid = #{transactionid,jdbcType=VARCHAR},
-            </if>
-            <if test="transactionDate != null">
-                transaction_date = #{transactionDate,jdbcType=VARCHAR},
-            </if>
-            <if test="ordertype != null">
-                ordertype = #{ordertype,jdbcType=INTEGER},
-            </if>
-            <if test="orderinfo != null">
-                orderinfo = #{orderinfo,jdbcType=VARCHAR},
-            </if>
-            <if test="accountCode != null">
-                account_code = #{accountCode,jdbcType=VARCHAR},
-            </if>
-            <if test="accountType != null">
-                account_type = #{accountType,jdbcType=INTEGER},
-            </if>
-            <if test="payPeriod != null">
-                pay_period = #{payPeriod,jdbcType=VARCHAR},
-            </if>
-            <if test="tradeNo != null">
-                trade_no = #{tradeNo,jdbcType=VARCHAR},
-            </if>
-            <if test="thirdOrderid != null">
-                third_orderid = #{thirdOrderid,jdbcType=VARCHAR},
-            </if>
-            <if test="failurereasons != null">
-                failurereasons = #{failurereasons,jdbcType=VARCHAR},
-            </if>
-            <if test="platformId != null">
-                platformid = #{platformId,jdbcType=VARCHAR},
-            </if>
-            <if test="price != null">
-                price = #{price,jdbcType=DECIMAL},
-            </if>
-            <if test="type != null">
-                type = #{type,jdbcType=INTEGER},
-            </if>
-            <if test="proCount != null">
-                pro_count = #{proCount,jdbcType=INTEGER},
-            </if>
-            <if test="payTime != null">
-                pay_time = #{payTime,jdbcType=TIMESTAMP},
-            </if>
-            update_time =now(),
-            <if test="returnUrl != null">
-                return_url = #{returnUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="notifyUrl != null">
-                notify_url = #{notifyUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="deleteFlag != null">
-                delete_flag = #{deleteFlag,jdbcType=INTEGER},
-            </if>
-            <if test="merchantid != null">
-                merchantid = #{merchantid,jdbcType=BIGINT},
-            </if>
-            <if test="productid != null">
-                productid = #{productid,jdbcType=BIGINT},
-            </if>
-            <if test="digestAlg != null">
-                digest_alg = #{digestAlg,jdbcType=INTEGER},
-            </if>
-            <if test="royaltyFlag != null">
-                royalty_flag = #{royaltyFlag,jdbcType=INTEGER},
-            </if>
-            <if test="merchantUrl != null">
-                merchant_url = #{merchantUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="orderType != null">
-                order_type = #{orderType,jdbcType=INTEGER},
-            </if>
-            <if test="mergeInfo != null">
-                merge_info = #{mergeInfo,jdbcType=VARCHAR}
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=INTEGER},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <select id="selectForSettle" resultMap="BaseResultMap" parameterType="java.util.Map" >
-        <foreach item="item" index="index" collection="tableNames" open="" separator=" union all " close="">
-            select
-            <include refid="Base_Column_List" />
-            from ${item}
-            where ordertype=0
-            and order_type=0<!--  普通订单 -->
-            <if test="days == null">
-                and to_days(now())-to_days(pay_time)=1 and order_type=0
-            </if>
-            <if test="days != null">
-                and to_days(now())-to_days(pay_time)=#{days, jdbcType=BIGINT}
-            </if>
-            <if test="platformid != null">
-                and platformid=#{platformid,jdbcType=VARCHAR}
-            </if>
-            and ${item}.royalty_flag=0
-            and delete_flag = 0
-            and not exists
-            (select 1 from pay_refund
-            where ${item}.trade_no = pay_refund.refund_orderid and pay_refund.status = 0 and pay_refund.delete_flag = 0
-            )
-        </foreach>
-    </select>
-    <select id="selectForShare" resultMap="BaseResultMap" parameterType="java.util.Map" >
-        select
-        sum(price) price,merchantid
-        from pay_order
-        where to_days(now())-to_days(pay_time)=1 and royalty_flag=1 and ordertype=0 and delete_flag=false group by merchantid
-    </select>
-    <select id="queryPayOrderCount" resultType="java.lang.Double" parameterType="com.cmcc.pay.model.PayOrder" >
-        select
-        IFNULL(sum(price),0)
-        from pay_order
-        where 1=1
-        AND trade_no not in   (
-        select
-        refund_orderid
-        from pay_refund
-        where delete_flag = 0 and status = 0 and platformid =#{payOrder.platformId} )
-        <if test="payOrder.startTime != null">
-            AND pay_time &gt;= #{payOrder.startTime}
-        </if>
-        <if test="payOrder.endTime != null">
-            AND pay_time &lt;= #{payOrder.endTime}
-        </if>
-        <if test="payOrder.ordertype != null">
-            AND ordertype = #{payOrder.ordertype}
-        </if>
-        <if test="payOrder.orderType != null">
-            AND order_type = #{payOrder.orderType}
-        </if>
-        <if test="payOrder.platformId != null">
-            AND platformid = #{payOrder.platformId}
-        </if>
-        AND royalty_flag = 0
-        AND delete_flag = 0
-    </select>
-    <select id="queryPayOrderCountLast" resultType="java.lang.Double" parameterType="com.cmcc.pay.model.PayOrder" >
-        select
-        IFNULL(sum(price),0)
-        from pay_order_${monthDay}
-        where 1=1
-        AND trade_no not in   (
-        select
-        refund_orderid
-        from pay_refund
-        where delete_flag = 0 and status = 0 and platformid =#{payOrder.platformId}   )
-        <if test="payOrder.startTime != null">
-            AND pay_time &gt;= #{payOrder.startTime}
-        </if>
-        <if test="payOrder.endTime != null">
-            AND pay_time &lt;= #{payOrder.endTime}
-        </if>
-        <if test="payOrder.ordertype != null">
-            AND ordertype = #{payOrder.ordertype}
-        </if>
-        <if test="payOrder.orderType != null">
-            AND order_type = #{payOrder.orderType}
-        </if>
-        <if test="payOrder.platformId != null">
-            AND platformid = #{payOrder.platformId}
-        </if>
-        AND royalty_flag = 0
-        AND delete_flag = 0
-    </select>
+    <!--<update id="update" parameterType="com.cmcc.pay.model.biz.PayOrder" >-->
+        <!--update pay_order-->
+        <!--<set >-->
+            <!--<if test="orderid != null">-->
+                <!--orderid = #{orderid,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="transactionid != null">-->
+                <!--transactionid = #{transactionid,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="transactionDate != null">-->
+                <!--transaction_date = #{transactionDate,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="ordertype != null">-->
+                <!--ordertype = #{ordertype,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="orderinfo != null">-->
+                <!--orderinfo = #{orderinfo,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="accountCode != null">-->
+                <!--account_code = #{accountCode,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="accountType != null">-->
+                <!--account_type = #{accountType,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="payPeriod != null">-->
+                <!--pay_period = #{payPeriod,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="tradeNo != null">-->
+                <!--trade_no = #{tradeNo,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="thirdOrderid != null">-->
+                <!--third_orderid = #{thirdOrderid,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="failurereasons != null">-->
+                <!--failurereasons = #{failurereasons,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="platformId != null">-->
+                <!--platformid = #{platformId,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="price != null">-->
+                <!--price = #{price,jdbcType=DECIMAL},-->
+            <!--</if>-->
+            <!--<if test="type != null">-->
+                <!--type = #{type,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="proCount != null">-->
+                <!--pro_count = #{proCount,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="payTime != null">-->
+                <!--pay_time = #{payTime,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+            <!--update_time =now(),-->
+            <!--<if test="returnUrl != null">-->
+                <!--return_url = #{returnUrl,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="notifyUrl != null">-->
+                <!--notify_url = #{notifyUrl,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="deleteFlag != null">-->
+                <!--delete_flag = #{deleteFlag,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="merchantid != null">-->
+                <!--merchantid = #{merchantid,jdbcType=BIGINT},-->
+            <!--</if>-->
+            <!--<if test="productid != null">-->
+                <!--productid = #{productid,jdbcType=BIGINT},-->
+            <!--</if>-->
+            <!--<if test="digestAlg != null">-->
+                <!--digest_alg = #{digestAlg,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="royaltyFlag != null">-->
+                <!--royalty_flag = #{royaltyFlag,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="merchantUrl != null">-->
+                <!--merchant_url = #{merchantUrl,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="orderType != null">-->
+                <!--order_type = #{orderType,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="mergeInfo != null">-->
+                <!--merge_info = #{mergeInfo,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--<if test="status != null">-->
+                <!--status = #{status,jdbcType=INTEGER},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where id = #{id,jdbcType=BIGINT}-->
+    <!--</update>-->
+    <!--<select id="selectForSettle" resultMap="BaseResultMap" parameterType="java.util.Map" >-->
+        <!--<foreach item="item" index="index" collection="tableNames" open="" separator=" union all " close="">-->
+            <!--select-->
+            <!--<include refid="Base_Column_List" />-->
+            <!--from ${item}-->
+            <!--where ordertype=0-->
+            <!--and order_type=0&lt;!&ndash;  普通订单 &ndash;&gt;-->
+            <!--<if test="days == null">-->
+                <!--and to_days(now())-to_days(pay_time)=1 and order_type=0-->
+            <!--</if>-->
+            <!--<if test="days != null">-->
+                <!--and to_days(now())-to_days(pay_time)=#{days, jdbcType=BIGINT}-->
+            <!--</if>-->
+            <!--<if test="platformid != null">-->
+                <!--and platformid=#{platformid,jdbcType=VARCHAR}-->
+            <!--</if>-->
+            <!--and ${item}.royalty_flag=0-->
+            <!--and delete_flag = 0-->
+            <!--and not exists-->
+            <!--(select 1 from pay_refund-->
+            <!--where ${item}.trade_no = pay_refund.refund_orderid and pay_refund.status = 0 and pay_refund.delete_flag = 0-->
+            <!--)-->
+        <!--</foreach>-->
+    <!--</select>-->
+    <!--<select id="selectForShare" resultMap="BaseResultMap" parameterType="java.util.Map" >-->
+        <!--select-->
+        <!--sum(price) price,merchantid-->
+        <!--from pay_order-->
+        <!--where to_days(now())-to_days(pay_time)=1 and royalty_flag=1 and ordertype=0 and delete_flag=false group by merchantid-->
+    <!--</select>-->
+    <!--<select id="queryPayOrderCount" resultType="java.lang.Double" parameterType="com.cmcc.pay.model.biz.PayOrder" >-->
+        <!--select-->
+        <!--IFNULL(sum(price),0)-->
+        <!--from pay_order-->
+        <!--where 1=1-->
+        <!--AND trade_no not in   (-->
+        <!--select-->
+        <!--refund_orderid-->
+        <!--from pay_refund-->
+        <!--where delete_flag = 0 and status = 0 and platformid =#{payOrder.platformId} )-->
+        <!--<if test="payOrder.startTime != null">-->
+            <!--AND pay_time &gt;= #{payOrder.startTime}-->
+        <!--</if>-->
+        <!--<if test="payOrder.endTime != null">-->
+            <!--AND pay_time &lt;= #{payOrder.endTime}-->
+        <!--</if>-->
+        <!--<if test="payOrder.ordertype != null">-->
+            <!--AND ordertype = #{payOrder.ordertype}-->
+        <!--</if>-->
+        <!--<if test="payOrder.orderType != null">-->
+            <!--AND order_type = #{payOrder.orderType}-->
+        <!--</if>-->
+        <!--<if test="payOrder.platformId != null">-->
+            <!--AND platformid = #{payOrder.platformId}-->
+        <!--</if>-->
+        <!--AND royalty_flag = 0-->
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
+    <!--<select id="queryPayOrderCountLast" resultType="java.lang.Double" parameterType="com.cmcc.pay.model.biz.PayOrder" >-->
+        <!--select-->
+        <!--IFNULL(sum(price),0)-->
+        <!--from pay_order_${monthDay}-->
+        <!--where 1=1-->
+        <!--AND trade_no not in   (-->
+        <!--select-->
+        <!--refund_orderid-->
+        <!--from pay_refund-->
+        <!--where delete_flag = 0 and status = 0 and platformid =#{payOrder.platformId}   )-->
+        <!--<if test="payOrder.startTime != null">-->
+            <!--AND pay_time &gt;= #{payOrder.startTime}-->
+        <!--</if>-->
+        <!--<if test="payOrder.endTime != null">-->
+            <!--AND pay_time &lt;= #{payOrder.endTime}-->
+        <!--</if>-->
+        <!--<if test="payOrder.ordertype != null">-->
+            <!--AND ordertype = #{payOrder.ordertype}-->
+        <!--</if>-->
+        <!--<if test="payOrder.orderType != null">-->
+            <!--AND order_type = #{payOrder.orderType}-->
+        <!--</if>-->
+        <!--<if test="payOrder.platformId != null">-->
+            <!--AND platformid = #{payOrder.platformId}-->
+        <!--</if>-->
+        <!--AND royalty_flag = 0-->
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
     <!-- 结算报表-支付额 -->
-    <select id="selectSumPrice" resultMap="BaseResultMap1" parameterType="java.util.Map" statementType="STATEMENT">
-        select t.platformid as platformId, t.merchantid as merchantId, m.merchant_name as merchantName, t.type as type, sum(t.price) as sumOrderPrice,
-        a.product_type, a.transfer_type, a.account_type
-        from (
-        select platformid, merchantid, productid, type, price
-        from ${toMonth}
-        where delete_flag = 0 and ordertype = 0 and royalty_flag = 0
-        <if test="platformId != null">
-            and platformid = ${platformId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select platformid, merchantid, productid, type, price
-        from ${lastMonth}
-        where delete_flag = 0 and ordertype = 0 and royalty_flag = 0
-        <if test="platformId != null">
-            and platformid = ${platformId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select platformid, merchantid, productid, type, price
-        from ${nextMonth}
-        where delete_flag = 0 and ordertype = 0 and royalty_flag = 0
-        <if test="platformId != null">
-            and platformid = ${platformId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select platformid, merchantid, productid, type, price
-        from ${next2Month}
-        where delete_flag = 0 and ordertype = 0 and royalty_flag = 0
-        <if test="platformId != null">
-            and platformid = ${platformId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        ) as t
-        left join pay_merchant m on t.platformid = m.platform_id and t.merchantid = m.merchant_id, pay_platform_account a,
-        (select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p
-        where t.platformid = p.platform_id and t.merchantid = p.merchant_id and t.productid = p.product_id and t.type = p.pay_type
-        and t.platformid = a.platformid and t.merchantid = a.merchant_id and t.type = a.pay_type and p.product_type = a.product_type
-        group by t.merchantid, t.type, a.product_type, a.transfer_type, a.account_type
-    </select>
+    <!--<select id="selectSumPrice" resultMap="BaseResultMap1" parameterType="java.util.Map" statementType="STATEMENT">-->
+        <!--select t.platformid as platformId, t.merchantid as merchantId, m.merchant_name as merchantName, t.type as type, sum(t.price) as sumOrderPrice,-->
+        <!--a.product_type, a.transfer_type, a.account_type-->
+        <!--from (-->
+        <!--select platformid, merchantid, productid, type, price-->
+        <!--from ${toMonth}-->
+        <!--where delete_flag = 0 and ordertype = 0 and royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select platformid, merchantid, productid, type, price-->
+        <!--from ${lastMonth}-->
+        <!--where delete_flag = 0 and ordertype = 0 and royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select platformid, merchantid, productid, type, price-->
+        <!--from ${nextMonth}-->
+        <!--where delete_flag = 0 and ordertype = 0 and royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select platformid, merchantid, productid, type, price-->
+        <!--from ${next2Month}-->
+        <!--where delete_flag = 0 and ordertype = 0 and royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--) as t-->
+        <!--left join pay_merchant m on t.platformid = m.platform_id and t.merchantid = m.merchant_id, pay_platform_account a,-->
+        <!--(select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p-->
+        <!--where t.platformid = p.platform_id and t.merchantid = p.merchant_id and t.productid = p.product_id and t.type = p.pay_type-->
+        <!--and t.platformid = a.platformid and t.merchantid = a.merchant_id and t.type = a.pay_type and p.product_type = a.product_type-->
+        <!--group by t.merchantid, t.type, a.product_type, a.transfer_type, a.account_type-->
+    <!--</select>-->
 
     <!-- 结算报表-退款额 -->
-    <select id="selectRefundFromOrder" resultMap="BaseResultMap1" parameterType="java.util.Map" statementType="STATEMENT">
-        select t.platformid as platformId, t.trade_no, t.merchantid as merchantId, m.merchant_name as merchantName, t.type as type,
-        a.product_type, a.transfer_type, a.account_type
-        from ${tableName}
-        left join pay_merchant m on t.platformid = m.platform_id and t.merchantid = m.merchant_id, pay_platform_account a,
-        (select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p
-        where t.platformid = p.platform_id and t.merchantid = p.merchant_id and t.productid = p.product_id and t.type = p.pay_type
-        and t.platformid = a.platformid and t.merchantid = a.merchant_id and t.type = a.pay_type and p.product_type = a.product_type
-        and t.trade_no in
-        <foreach item="item" index="index" collection="tradenos" open="(" separator="," close=")">
-            '${item}'
-        </foreach>
-        <if test="date != null">
-            <![CDATA[and DATE_FORMAT(t.pay_time, '%Y-%m-%d') <= '${date}']]>
-        </if>
-    </select>
+    <!--<select id="selectRefundFromOrder" resultMap="BaseResultMap1" parameterType="java.util.Map" statementType="STATEMENT">-->
+        <!--select t.platformid as platformId, t.trade_no, t.merchantid as merchantId, m.merchant_name as merchantName, t.type as type,-->
+        <!--a.product_type, a.transfer_type, a.account_type-->
+        <!--from ${tableName}-->
+        <!--left join pay_merchant m on t.platformid = m.platform_id and t.merchantid = m.merchant_id, pay_platform_account a,-->
+        <!--(select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p-->
+        <!--where t.platformid = p.platform_id and t.merchantid = p.merchant_id and t.productid = p.product_id and t.type = p.pay_type-->
+        <!--and t.platformid = a.platformid and t.merchantid = a.merchant_id and t.type = a.pay_type and p.product_type = a.product_type-->
+        <!--and t.trade_no in-->
+        <!--<foreach item="item" index="index" collection="tradenos" open="(" separator="," close=")">-->
+            <!--'${item}'-->
+        <!--</foreach>-->
+        <!--<if test="date != null">-->
+            <!--<![CDATA[and DATE_FORMAT(t.pay_time, '%Y-%m-%d') <= '${date}']]>-->
+        <!--</if>-->
+    <!--</select>-->
 
     <!-- 结算报表-支付明细总数-->
-    <select id="selectPayOrderDetailCount" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(1) from(
-        select o.platformid, o.orderid, o.merchantid, o.type, o.productid
-        from ${toMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.orderid, o.merchantid, o.type, o.productid
-        from ${lastMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.orderid, o.merchantid, o.type, o.productid
-        from ${nextMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.orderid, o.merchantid, o.type, o.productid
-        from ${next2Month}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        ) as b
-        left join pay_merchant m on b.platformid = m.platform_id and b.merchantid = m.merchant_id,
-        pay_platform_account a,
-        (select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p
-        where b.platformid = p.platform_id and b.merchantid = p.merchant_id and b.productid = p.product_id and b.type = p.pay_type
-        and b.platformid = a.platformid and b.merchantid = a.merchant_id and b.type = a.pay_type and p.product_type = a.product_type
-    </select>
+    <!--<select id="selectPayOrderDetailCount" resultType="java.lang.Integer" parameterType="java.util.Map">-->
+        <!--select count(1) from(-->
+        <!--select o.platformid, o.orderid, o.merchantid, o.type, o.productid-->
+        <!--from ${toMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.orderid, o.merchantid, o.type, o.productid-->
+        <!--from ${lastMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.orderid, o.merchantid, o.type, o.productid-->
+        <!--from ${nextMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.orderid, o.merchantid, o.type, o.productid-->
+        <!--from ${next2Month}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--) as b-->
+        <!--left join pay_merchant m on b.platformid = m.platform_id and b.merchantid = m.merchant_id,-->
+        <!--pay_platform_account a,-->
+        <!--(select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p-->
+        <!--where b.platformid = p.platform_id and b.merchantid = p.merchant_id and b.productid = p.product_id and b.type = p.pay_type-->
+        <!--and b.platformid = a.platformid and b.merchantid = a.merchant_id and b.type = a.pay_type and p.product_type = a.product_type-->
+    <!--</select>-->
 
     <!-- 结算报表-支付明细 -->
-    <select id="selectPayOrderDetail" resultMap="BaseResultMap2" parameterType="java.util.Map" statementType="STATEMENT">
-        select b.platformid, b.pay_time, b.orderid, b.trade_no, b.third_orderid, m.merchant_name, p.product_name, p.settle_period,
-        b.type, b.price, b.status, a.product_type, a.transfer_type, a.account_type
-        from(
-        select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status
-        from ${toMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="payType != null">
-            and o.type = ${payType}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status
-        from ${lastMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="payType != null">
-            and o.type = ${payType}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status
-        from ${nextMonth}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="payType != null">
-            and o.type = ${payType}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        union all
-        select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status
-        from ${next2Month}
-        where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0
-        <if test="platformId != null">
-            and o.platformid = ${platformId}
-        </if>
-        <if test="merchantId != null">
-            and o.merchantid = ${merchantId}
-        </if>
-        <if test="payType != null">
-            and o.type = ${payType}
-        </if>
-        <if test="startTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>
-        </if>
-        <if test="endTime != null">
-            <![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>
-        </if>
-        ) as b
-        left join pay_merchant m on b.platformid = m.platform_id and b.merchantid = m.merchant_id
-        , pay_platform_account a,
-        (select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p
-        where b.platformid = p.platform_id and b.merchantid = p.merchant_id and b.productid = p.product_id and b.type = p.pay_type
-        and b.platformid = a.platformid and b.merchantid = a.merchant_id and b.type = a.pay_type and p.product_type = a.product_type
-        <if test="accountType != null">
-            and a.account_type = ${accountType}
-        </if>
-        <if test="transferType != null">
-            and a.transfer_type = ${transferType}
-        </if>
-        ORDER BY b.pay_time DESC, CONVERT(m.merchant_name USING gbk), CONVERT(p.product_name USING gbk)
-        <if test="index != null and pageSize != null">
-            LIMIT ${index}, ${pageSize}
-        </if>
-    </select>
+    <!--<select id="selectPayOrderDetail" resultMap="BaseResultMap2" parameterType="java.util.Map" statementType="STATEMENT">-->
+        <!--select b.platformid, b.pay_time, b.orderid, b.trade_no, b.third_orderid, m.merchant_name, p.product_name, p.settle_period,-->
+        <!--b.type, b.price, b.status, a.product_type, a.transfer_type, a.account_type-->
+        <!--from(-->
+        <!--select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status-->
+        <!--from ${toMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="payType != null">-->
+            <!--and o.type = ${payType}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status-->
+        <!--from ${lastMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="payType != null">-->
+            <!--and o.type = ${payType}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status-->
+        <!--from ${nextMonth}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="payType != null">-->
+            <!--and o.type = ${payType}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--union all-->
+        <!--select o.platformid, o.pay_time, o.orderid, o.trade_no, o.third_orderid, o.merchantid, o.productid, o.type, o.price, o.status-->
+        <!--from ${next2Month}-->
+        <!--where o.delete_flag = 0 and o.ordertype = 0 and o.royalty_flag = 0-->
+        <!--<if test="platformId != null">-->
+            <!--and o.platformid = ${platformId}-->
+        <!--</if>-->
+        <!--<if test="merchantId != null">-->
+            <!--and o.merchantid = ${merchantId}-->
+        <!--</if>-->
+        <!--<if test="payType != null">-->
+            <!--and o.type = ${payType}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') >= ${startTime}]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[and DATE_FORMAT(o.pay_time, '%Y-%m-%d') <= ${endTime}]]>-->
+        <!--</if>-->
+        <!--) as b-->
+        <!--left join pay_merchant m on b.platformid = m.platform_id and b.merchantid = m.merchant_id-->
+        <!--, pay_platform_account a,-->
+        <!--(select * from pay_product pro group by pro.platform_id, pro.merchant_id, pro.product_id, pro.pay_type) as p-->
+        <!--where b.platformid = p.platform_id and b.merchantid = p.merchant_id and b.productid = p.product_id and b.type = p.pay_type-->
+        <!--and b.platformid = a.platformid and b.merchantid = a.merchant_id and b.type = a.pay_type and p.product_type = a.product_type-->
+        <!--<if test="accountType != null">-->
+            <!--and a.account_type = ${accountType}-->
+        <!--</if>-->
+        <!--<if test="transferType != null">-->
+            <!--and a.transfer_type = ${transferType}-->
+        <!--</if>-->
+        <!--ORDER BY b.pay_time DESC, CONVERT(m.merchant_name USING gbk), CONVERT(p.product_name USING gbk)-->
+        <!--<if test="index != null and pageSize != null">-->
+            <!--LIMIT ${index}, ${pageSize}-->
+        <!--</if>-->
+    <!--</select>-->
 
     <!-- 分页获取订单信息，生成子公司对账单 -->
     <!-- <select id="queryCheckFilePage" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -708,27 +708,27 @@
         ORDER BY t.ID DESC LIMIT #{index,jdbcType=BIGINT}, #{pageSize,jdbcType=BIGINT}
     </select> -->
     <!-- 获取支付记录（以支付平台为准） -->
-    <select id="queryCheckFilePage" resultMap="BaseResultMap" parameterType="java.util.Map">
-        SELECT DISTINCT
-        T.id, T.orderid, T.transactionid, T.transaction_date, T.ordertype, T.orderinfo, T.account_code,
-        T.account_type, T.pay_period, T.trade_no, T.third_orderid, T.failurereasons, T.platformid, T.price,
-        T.type, T.pay_time, T.create_time, T.update_time, T.return_url, T.notify_url, T.delete_flag, T.merchantid,
-        T.productid,T.royalty_flag,T.digest_alg,T.pro_count,T.merchant_url,T.order_type,T.merge_info,M.product_name
-        FROM pay_order T left join pay_product M on T.platformid=M.platform_id and T.merchantid=M.merchant_id and T.productid=M.product_id and T.type=M.pay_type
-        WHERE 1=1
-        <if test="startPay != null">
-            AND T.pay_time >= STR_TO_DATE(#{startPay,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')
-        </if>
-        <if test="endPay != null">
-            <![CDATA[ AND T.pay_time <= STR_TO_DATE(#{endPay,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')]]>
-        </if>
-        AND T.merchantid = #{merchantid,jdbcType=BIGINT}
-        AND T.platformid = #{platformId,jdbcType=VARCHAR}
-        AND T.ordertype = 0 <!-- 支付成功 -->
-        AND T.order_type = 0 <!-- 普通订单 -->
-        AND T.delete_flag = 0
-        ORDER BY T.ID DESC LIMIT #{index,jdbcType=BIGINT}, #{pageSize,jdbcType=BIGINT}
-    </select>
+    <!--<select id="queryCheckFilePage" resultMap="BaseResultMap" parameterType="java.util.Map">-->
+        <!--SELECT DISTINCT-->
+        <!--T.id, T.orderid, T.transactionid, T.transaction_date, T.ordertype, T.orderinfo, T.account_code,-->
+        <!--T.account_type, T.pay_period, T.trade_no, T.third_orderid, T.failurereasons, T.platformid, T.price,-->
+        <!--T.type, T.pay_time, T.create_time, T.update_time, T.return_url, T.notify_url, T.delete_flag, T.merchantid,-->
+        <!--T.productid,T.royalty_flag,T.digest_alg,T.pro_count,T.merchant_url,T.order_type,T.merge_info,M.product_name-->
+        <!--FROM pay_order T left join pay_product M on T.platformid=M.platform_id and T.merchantid=M.merchant_id and T.productid=M.product_id and T.type=M.pay_type-->
+        <!--WHERE 1=1-->
+        <!--<if test="startPay != null">-->
+            <!--AND T.pay_time >= STR_TO_DATE(#{startPay,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')-->
+        <!--</if>-->
+        <!--<if test="endPay != null">-->
+            <!--<![CDATA[ AND T.pay_time <= STR_TO_DATE(#{endPay,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')]]>-->
+        <!--</if>-->
+        <!--AND T.merchantid = #{merchantid,jdbcType=BIGINT}-->
+        <!--AND T.platformid = #{platformId,jdbcType=VARCHAR}-->
+        <!--AND T.ordertype = 0 &lt;!&ndash; 支付成功 &ndash;&gt;-->
+        <!--AND T.order_type = 0 &lt;!&ndash; 普通订单 &ndash;&gt;-->
+        <!--AND T.delete_flag = 0-->
+        <!--ORDER BY T.ID DESC LIMIT #{index,jdbcType=BIGINT}, #{pageSize,jdbcType=BIGINT}-->
+    <!--</select>-->
 
     <select id="selectByOrderid" resultMap="BaseResultMap"
             parameterType="java.util.Map" >
@@ -743,113 +743,113 @@
             parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
-        from pay_order
+        from pay_order_1607
         where trade_no = #{tradeNo,jdbcType=VARCHAR}
         AND delete_flag = 0
     </select>
 
-    <update id="updateByOrderid"  parameterType="java.util.Map">
-        update pay_order set
-        <if test="paidPrice != null">
-            price = #{paidPrice,jdbcType=DECIMAL},
-        </if>
-        <if test="thirdOrderid != null">
-            third_orderid = #{thirdOrderid,jdbcType=VARCHAR},
-        </if>
-        <if test="payTime != null">
-            pay_time = STR_TO_DATE(#{payTime,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s'),
-        </if>
-        ordertype = 0,
-        update_time = now()
-        where trade_no = #{tradeNo,jdbcType=VARCHAR}
-        AND delete_flag = 0
-    </update>
+    <!--<update id="updateByOrderid"  parameterType="java.util.Map">-->
+        <!--update pay_order set-->
+        <!--<if test="paidPrice != null">-->
+            <!--price = #{paidPrice,jdbcType=DECIMAL},-->
+        <!--</if>-->
+        <!--<if test="thirdOrderid != null">-->
+            <!--third_orderid = #{thirdOrderid,jdbcType=VARCHAR},-->
+        <!--</if>-->
+        <!--<if test="payTime != null">-->
+            <!--pay_time = STR_TO_DATE(#{payTime,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s'),-->
+        <!--</if>-->
+        <!--ordertype = 0,-->
+        <!--update_time = now()-->
+        <!--where trade_no = #{tradeNo,jdbcType=VARCHAR}-->
+        <!--AND delete_flag = 0-->
+    <!--</update>-->
 
 
-    <select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">
-        SELECT COUNT(1) FROM pay_order T WHERE 1=1
+    <!--<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.Map">-->
+        <!--SELECT COUNT(1) FROM pay_order T WHERE 1=1-->
 
-        <if test="otherType != null">
-            AND T.type = #{otherType,jdbcType=INTEGER}
-        </if>
-        <if test="platformId != null">
-            AND T.platformid = #{platformId,jdbcType=VARCHAR}
-        </if>
-        <if test="orderid != null">
-            AND T.orderid = #{orderid,jdbcType=VARCHAR}
-        </if>
-        <if test="startTime != null">
-            AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>
-        </if>
-        AND delete_flag = 0
-    </select>
-
-
-    <select id="queryPagination" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select <include refid="Base_Column_List" />
-
-        from pay_order T
-
-        WHERE 1=1
-
-        <if test="otherType != null">
-            AND T.type = #{otherType,jdbcType=INTEGER}
-        </if>
-        <if test="platformId != null">
-            AND T.platformid = #{platformId,jdbcType=VARCHAR}
-        </if>
-        <if test="orderid != null">
-            AND T.orderid = #{orderid,jdbcType=VARCHAR}
-        </if>
-        <if test="startTime != null">
-            AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>
-        </if>
-
-        AND delete_flag = 0
-        order by T.create_time DESC, T.update_time desc
-        LIMIT #{index,jdbcType=BIGINT}, #{pageSize,jdbcType=BIGINT}
-    </select>
+        <!--<if test="otherType != null">-->
+            <!--AND T.type = #{otherType,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="platformId != null">-->
+            <!--AND T.platformid = #{platformId,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="orderid != null">-->
+            <!--AND T.orderid = #{orderid,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>-->
+        <!--</if>-->
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
 
 
+    <!--<select id="queryPagination" resultMap="BaseResultMap" parameterType="java.util.Map">-->
+        <!--select <include refid="Base_Column_List" />-->
 
-    <select id="querySum" resultType="java.lang.Double" parameterType="java.util.Map">
-        SELECT COALESCE(SUM(price),0) FROM pay_order T WHERE 1=1
-        <if test="otherType != null">
-            AND T.type = #{otherType,jdbcType=INTEGER}
-        </if>
-        <if test="status != null">
-            AND T.ordertype = #{status,jdbcType=INTEGER}
-        </if>
-        <if test="startTime != null">
-            AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d
-            %H:%i:%s')
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')]]>
-        </if>
-        AND delete_flag = 0
-    </select>
+        <!--from pay_order T-->
 
-    <select id="selectAllMerchantId" resultType="java.lang.Long" parameterType="java.lang.String">
-        select distinct(merchantid) from pay_order where 1=1
-        AND delete_flag = 0
-    </select>
+        <!--WHERE 1=1-->
 
-    <select id="selectAllCountAndPrice" resultType="com.cmcc.pay.model.check.Statistics"  parameterType="java.util.Map">
-        select merchantid,type,ordertype,
-        count(1) AS count, sum(price) AS price
-        from pay_order
-        where merchantid =#{merchantId,jdbcType=BIGINT}
-        group by type,ordertype
-    </select>
+        <!--<if test="otherType != null">-->
+            <!--AND T.type = #{otherType,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="platformId != null">-->
+            <!--AND T.platformid = #{platformId,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="orderid != null">-->
+            <!--AND T.orderid = #{orderid,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>-->
+        <!--</if>-->
 
-    <select id="selectPaysByQuery" resultMap="BaseResultMap" parameterType="com.cmcc.pay.model.PayOrder">
+        <!--AND delete_flag = 0-->
+        <!--order by T.create_time DESC, T.update_time desc-->
+        <!--LIMIT #{index,jdbcType=BIGINT}, #{pageSize,jdbcType=BIGINT}-->
+    <!--</select>-->
+
+
+
+    <!--<select id="querySum" resultType="java.lang.Double" parameterType="java.util.Map">-->
+        <!--SELECT COALESCE(SUM(price),0) FROM pay_order T WHERE 1=1-->
+        <!--<if test="otherType != null">-->
+            <!--AND T.type = #{otherType,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="status != null">-->
+            <!--AND T.ordertype = #{status,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d-->
+            <!--%H:%i:%s')-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d %H:%i:%s')]]>-->
+        <!--</if>-->
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
+
+    <!--<select id="selectAllMerchantId" resultType="java.lang.Long" parameterType="java.lang.String">-->
+        <!--select distinct(merchantid) from pay_order where 1=1-->
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
+
+    <!--<select id="selectAllCountAndPrice" resultType="com.cmcc.pay.model.check.Statistics"  parameterType="java.util.Map">-->
+        <!--select merchantid,type,ordertype,-->
+        <!--count(1) AS count, sum(price) AS price-->
+        <!--from pay_order-->
+        <!--where merchantid =#{merchantId,jdbcType=BIGINT}-->
+        <!--group by type,ordertype-->
+    <!--</select>-->
+
+    <select id="selectPaysByQuery" resultMap="BaseResultMap" parameterType="com.cmcc.pay.model.biz.PayOrder">
         select
         <include refid="Base_Column_List" />
         from pay_order
@@ -860,118 +860,118 @@
 
     <!-- 查询用户充值总金额 -->
     <!-- select sum(t.price),count(*) from pay_order_1601 t where t.account_code = '18605818703' and t.platformid = '0003'; -->
-    <select id="selectAllRechargeprice" resultType="java.lang.Double" parameterType="java.util.Map" >
-        select sum(t.price) from pay_order t
-        where t.account_code = #{accountCode,jdbcType=VARCHAR}
-        AND t.platformid = #{platformId,jdbcType=BIGINT}
-        AND t.ordertype = 0
-        AND t.type != 7
-    </select>
+    <!--<select id="selectAllRechargeprice" resultType="java.lang.Double" parameterType="java.util.Map" >-->
+        <!--select sum(t.price) from pay_order t-->
+        <!--where t.account_code = #{accountCode,jdbcType=VARCHAR}-->
+        <!--AND t.platformid = #{platformId,jdbcType=BIGINT}-->
+        <!--AND t.ordertype = 0-->
+        <!--AND t.type != 7-->
+    <!--</select>-->
 
-    <select id="selectUnuseOrder" resultMap="BaseResultMap" parameterType="java.util.Map">
-        select <include refid="Base_Column_List" />
+    <!--<select id="selectUnuseOrder" resultMap="BaseResultMap" parameterType="java.util.Map">-->
+        <!--select <include refid="Base_Column_List" />-->
 
-        from pay_order T
+        <!--from pay_order T-->
 
-        WHERE 1=1
-        <if test="ordertype != null">
-            AND T.ordertype = #{ordertype,jdbcType=INTEGER}
-        </if>
-        <if test="type != null">
-            AND T.type = #{type,jdbcType=INTEGER}
-        </if>
-        AND not EXISTS (select * from pay_redpacket p where T.trade_no = p.serial_no)
-        <if test="tradeNo != null">
-            AND T.trade_no like #{tradeNo,jdbcType=VARCHAR}
-        </if>
-        <if test="platformId != null">
-            AND T.platformid = #{platformId,jdbcType=VARCHAR}
-        </if>
-        <if test="startTime != null">
-            AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>
-        </if>
+        <!--WHERE 1=1-->
+        <!--<if test="ordertype != null">-->
+            <!--AND T.ordertype = #{ordertype,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="type != null">-->
+            <!--AND T.type = #{type,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--AND not EXISTS (select * from pay_redpacket p where T.trade_no = p.serial_no)-->
+        <!--<if test="tradeNo != null">-->
+            <!--AND T.trade_no like #{tradeNo,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="platformId != null">-->
+            <!--AND T.platformid = #{platformId,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>-->
+        <!--</if>-->
 
-        AND delete_flag = 0
-    </select>
+        <!--AND delete_flag = 0-->
+    <!--</select>-->
 
     <!-- 查询订单总金额 -->
-    <select id="selectTotalPrice" resultType="java.lang.Double" parameterType="java.util.Map">
-        select sum(T.price)
+    <!--<select id="selectTotalPrice" resultType="java.lang.Double" parameterType="java.util.Map">-->
+        <!--select sum(T.price)-->
 
-        from pay_order T
+        <!--from pay_order T-->
 
-        WHERE 1=1
-        <if test="ordertype != null">
-            AND T.ordertype = #{ordertype,jdbcType=INTEGER}
-        </if>
-        <if test="type != null">
-            AND T.type = #{type,jdbcType=INTEGER}
-        </if>
-        <if test="tradeNo != null">
-            AND T.trade_no like #{tradeNo,jdbcType=VARCHAR}
-        </if>
-        <if test="platformId != null">
-            AND T.platformid = #{platformId,jdbcType=VARCHAR}
-        </if>
-        <if test="startTime != null">
-            AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')
-        </if>
-        <if test="endTime != null">
-            <![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>
-        </if>
-    </select>
+        <!--WHERE 1=1-->
+        <!--<if test="ordertype != null">-->
+            <!--AND T.ordertype = #{ordertype,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="type != null">-->
+            <!--AND T.type = #{type,jdbcType=INTEGER}-->
+        <!--</if>-->
+        <!--<if test="tradeNo != null">-->
+            <!--AND T.trade_no like #{tradeNo,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="platformId != null">-->
+            <!--AND T.platformid = #{platformId,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="startTime != null">-->
+            <!--AND T.create_time >= STR_TO_DATE(#{startTime,jdbcType=VARCHAR},'%Y-%c-%d')-->
+        <!--</if>-->
+        <!--<if test="endTime != null">-->
+            <!--<![CDATA[ AND T.create_time <= STR_TO_DATE(#{endTime,jdbcType=VARCHAR},'%Y-%c-%d')]]>-->
+        <!--</if>-->
+    <!--</select>-->
 
-    <update id="updateOrdertypeById"  parameterType="com.cmcc.pay.model.PayOrder">
-        update pay_order
-        set trade_no = #{tradeNo,jdbcType=VARCHAR},
-        ordertype = #{ordertype,jdbcType=INTEGER},
-        update_time = now()
-        where id = #{id,jdbcType=BIGINT}
-        AND delete_flag = 0
-    </update>
+    <!--<update id="updateOrdertypeById"  parameterType="com.cmcc.pay.model.biz.PayOrder">-->
+        <!--update pay_order-->
+        <!--set trade_no = #{tradeNo,jdbcType=VARCHAR},-->
+        <!--ordertype = #{ordertype,jdbcType=INTEGER},-->
+        <!--update_time = now()-->
+        <!--where id = #{id,jdbcType=BIGINT}-->
+        <!--AND delete_flag = 0-->
+    <!--</update>-->
 
-    <update id="updatePayTypeById"  parameterType="java.util.Map">
-        update pay_order set
-        type = #{type,jdbcType=INTEGER},
-        update_time = now()
-        where id = #{parseLong,jdbcType=BIGINT}
-        AND delete_flag = 0
-    </update>
+    <!--<update id="updatePayTypeById"  parameterType="java.util.Map">-->
+        <!--update pay_order set-->
+        <!--type = #{type,jdbcType=INTEGER},-->
+        <!--update_time = now()-->
+        <!--where id = #{parseLong,jdbcType=BIGINT}-->
+        <!--AND delete_flag = 0-->
+    <!--</update>-->
 
-    <update id="updateByPrimaryKey" parameterType="com.cmcc.pay.model.PayOrder">
-        update pay_order
-        set orderid = #{orderid,jdbcType=VARCHAR},
-        ordertype = #{ordertype,jdbcType=INTEGER},
-        orderinfo = #{orderinfo,jdbcType=VARCHAR},
-        trade_no = #{tradeNo,jdbcType=VARCHAR},
-        notifyid = #{notifyid,jdbcType=VARCHAR},
-        failurereasons = #{failurereasons,jdbcType=VARCHAR},
-        platformid = #{platformId,jdbcType=INTEGER},
-        price = #{price,jdbcType=DECIMAL},
-        type = #{type,jdbcType=INTEGER},
-        pay_period = #{payPeriod,jdbcType=VARCHAR},
-        pay_time = #{payTime,jdbcType=TIMESTAMP},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-        update_time = now(),
-        return_url = #{returnUrl,jdbcType=VARCHAR},
-        notify_url = #{notifyUrl,jdbcType=VARCHAR},
-        merchant_url = #{merchantUrl,jdbcType=VARCHAR},
-        delete_flag = #{deleteFlag,jdbcType=INTEGER},
-        account_code = #{accountCode,jdbcType=VARCHAR},
-        account_type = #{accountType,jdbcType=INTEGER},
-        third_orderid = #{thirdOrderid,jdbcType=VARCHAR},
-        merchantid = #{merchantid,jdbcType=INTEGER},
-        productid = #{productid,jdbcType=INTEGER},
-        royalty_flag = #{royaltyFlag,jdbcType=INTEGER},
-        digest_alg = #{digestAlg,jdbcType=INTEGER},
-        pro_count = #{proCount,jdbcType=INTEGER},
-        transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
-        transactionid = #{transactionid,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=BIGINT}
-    </update>
+    <!--<update id="updateByPrimaryKey" parameterType="com.cmcc.pay.model.biz.PayOrder">-->
+        <!--update pay_order-->
+        <!--set orderid = #{orderid,jdbcType=VARCHAR},-->
+        <!--ordertype = #{ordertype,jdbcType=INTEGER},-->
+        <!--orderinfo = #{orderinfo,jdbcType=VARCHAR},-->
+        <!--trade_no = #{tradeNo,jdbcType=VARCHAR},-->
+        <!--notifyid = #{notifyid,jdbcType=VARCHAR},-->
+        <!--failurereasons = #{failurereasons,jdbcType=VARCHAR},-->
+        <!--platformid = #{platformId,jdbcType=INTEGER},-->
+        <!--price = #{price,jdbcType=DECIMAL},-->
+        <!--type = #{type,jdbcType=INTEGER},-->
+        <!--pay_period = #{payPeriod,jdbcType=VARCHAR},-->
+        <!--pay_time = #{payTime,jdbcType=TIMESTAMP},-->
+        <!--create_time = #{createTime,jdbcType=TIMESTAMP},-->
+        <!--update_time = now(),-->
+        <!--return_url = #{returnUrl,jdbcType=VARCHAR},-->
+        <!--notify_url = #{notifyUrl,jdbcType=VARCHAR},-->
+        <!--merchant_url = #{merchantUrl,jdbcType=VARCHAR},-->
+        <!--delete_flag = #{deleteFlag,jdbcType=INTEGER},-->
+        <!--account_code = #{accountCode,jdbcType=VARCHAR},-->
+        <!--account_type = #{accountType,jdbcType=INTEGER},-->
+        <!--third_orderid = #{thirdOrderid,jdbcType=VARCHAR},-->
+        <!--merchantid = #{merchantid,jdbcType=INTEGER},-->
+        <!--productid = #{productid,jdbcType=INTEGER},-->
+        <!--royalty_flag = #{royaltyFlag,jdbcType=INTEGER},-->
+        <!--digest_alg = #{digestAlg,jdbcType=INTEGER},-->
+        <!--pro_count = #{proCount,jdbcType=INTEGER},-->
+        <!--transaction_date = #{transactionDate,jdbcType=TIMESTAMP},-->
+        <!--transactionid = #{transactionid,jdbcType=VARCHAR}-->
+        <!--where id = #{id,jdbcType=BIGINT}-->
+    <!--</update>-->
 
     <delete id="deletePay" parameterType="java.lang.String">
         delete from pay_order where trade_no = #{tradeNo,jdbcType=VARCHAR}

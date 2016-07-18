@@ -19,11 +19,11 @@
     http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-    <bean id="httpClientUtil" class="com.cmcc.pay.paystand.test.util.HttpClientUtil">
+    <!--<bean id="httpClientUtil" class="com.cmcc.pay.paystand.test.util.HttpClientUtil">-->
 
-    </bean>
+    <!--</bean>-->
 
-    <bean id="cfgInit" class="com.cmcc.pay.paystand.test.util.CfgInit" init-method="init">
+    <bean id="cfgInit" class="com.cmcc.pay.util.CfgInit" init-method="init"/>
 
-    </bean>
+
 </beans>
