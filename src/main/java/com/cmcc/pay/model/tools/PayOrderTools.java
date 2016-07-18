@@ -16,7 +16,7 @@ public class PayOrderTools {
         XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
         Map<Integer, String> xlsFieldMap = new HashMap<Integer, String>();
         for (int i = 1; i <= firstXssfRow.getLastCellNum(); i++) {
-            xlsFieldMap.put(i, ExcelUtil.getValue(firstXssfRow.getCell(i)));
+            xlsFieldMap.put(i, ExcelUtil.getValue(firstXssfRow.getCell(i-1)));
         }
         xssfRowList.remove(0);
 //        Iterator<Cell> iterator = firstXssfRow.iterator();
