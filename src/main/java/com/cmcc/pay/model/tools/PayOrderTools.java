@@ -59,6 +59,62 @@ public class PayOrderTools {
         } else if (ExcelFieldEnum.orderId.equals(fieldName)) {
             payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
         }
+        else if (ExcelFieldEnum.transactionId.equals(fieldName)) {
+            payOrder.setTransactionid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.transactionDate.equals(fieldName)) {
+            payOrder.setTransactionDate(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.orderType.equals(fieldName)) {
+            payOrder.setOrdertype(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.orderInfo.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.accountCode.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.accountType.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.payPeriod.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.tradeNo.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.thirdOrderId.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.failureReasons.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.platformId.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.price.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.type.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.payTime.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.createTime.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.updateTime.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.returnUrl.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.notifyUrl.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.deleteFlag.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.merchantId.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.productId.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.royaltyFlag.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.digestAlg.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.proCount.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.order_Type.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.merchantUrl.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.status.equals(fieldName)) {
+            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }
+
         // TODO: 2016/7/18
         //...
 
