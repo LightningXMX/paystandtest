@@ -2,33 +2,35 @@ package com.cmcc.pay.model.tools;
 
 import com.cmcc.pay.model.biz.PayOrder;
 import com.cmcc.pay.util.ExcelUtil;
-import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.util.StringUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LIGHTNING on 2016/7/17.
  */
 public class PayOrderTools {
-    public static List<PayOrder> build(List<XSSFRow> xssfRowList) {
+
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static List<PayOrder> build(List<XSSFRow> xssfRowList) throws Exception {
         XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
         Map<Integer, String> xlsFieldMap = new HashMap<Integer, String>();
         for (int i = 1; i <= firstXssfRow.getLastCellNum(); i++) {
             xlsFieldMap.put(i, ExcelUtil.getValue(firstXssfRow.getCell(i-1)));
         }
         xssfRowList.remove(0);
-//        Iterator<Cell> iterator = firstXssfRow.iterator();
-//        while (iterator.hasNext()){
-//            System.out.println(iterator.next());
-//        }
-
         List<PayOrder> payOrderList = new ArrayList<PayOrder>();
         for (XSSFRow xssfRow : xssfRowList) {
             PayOrder payOrder = new PayOrder();
-
 
             for (Map.Entry<Integer, String> integerStringEntry : xlsFieldMap.entrySet()) {
                 int fieldNO = integerStringEntry.getKey();
@@ -37,87 +39,77 @@ public class PayOrderTools {
                 setPayOrderFiled(payOrder, fieldName, fieldValue);
             }
 
-//            Iterator<Cell> iterator1 = xssfRow.iterator();
-//            while (iterator1.hasNext()){
-//                System.out.println(iterator1.next());
-//            }
-//            payOrder.setId(Long.parseLong(ExcelUtil.getValue(xssfRow.getCell(0))));
-//            payOrder.setOrderid(ExcelUtil.getValue(xssfRow.getCell(1)));
-//            payOrder.setTransactionid(ExcelUtil.getValue(xssfRow.getCell(2)));
-//            payOrder.setTransactionDate(ExcelUtil.getValue(xssfRow.getCell(3)));
             payOrderList.add(payOrder);
-            //// TODO: 2016/7/17  
         }
-
         return payOrderList;
     }
 
     //把Excel中cell的值填入对象中
-    public static void setPayOrderFiled(PayOrder payOrder, String fieldName, XSSFCell fieldValue) {
-        if (ExcelFieldEnum.id.equals(fieldName)) {
-
-            payOrder.setId(Long.parseLong(ExcelUtil.getValue(fieldValue)));
-        } else if (ExcelFieldEnum.orderId.equals(fieldName)) {
+    public static void setPayOrderFiled(PayOrder payOrder, String fieldName, XSSFCell fieldValue) throws Exception{
+        if (ExcelFieldEnum.PayOrderExcelFieldEnum.id.equals(fieldName)) {
+            if (!StringUtils.isEmpty(ExcelUtil.getValue(fieldValue))) {
+                payOrder.setId(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+            }
+        } else if (ExcelFieldEnum.PayOrderExcelFieldEnum.orderId.equals(fieldName)) {
             payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
         }
-        else if (ExcelFieldEnum.transactionId.equals(fieldName)) {
+        else if (ExcelFieldEnum.PayOrderExcelFieldEnum.transactionId.equals(fieldName)) {
             payOrder.setTransactionid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.transactionDate.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.transactionDate.equals(fieldName)) {
             payOrder.setTransactionDate(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.orderType.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.orderType.equals(fieldName)) {
             payOrder.setOrdertype(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
-        }else if (ExcelFieldEnum.orderInfo.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.orderInfo.equals(fieldName)) {
             payOrder.setOrderinfo(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.accountCode.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.accountCode.equals(fieldName)) {
             payOrder.setAccountCode(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.accountType.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.accountType.equals(fieldName)) {
             payOrder.setOrdertype(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
-        }else if (ExcelFieldEnum.payPeriod.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.payPeriod.equals(fieldName)) {
             payOrder.setPayPeriod(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.tradeNo.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.tradeNo.equals(fieldName)) {
             payOrder.setTradeNo(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.thirdOrderId.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.thirdOrderId.equals(fieldName)) {
             payOrder.setThirdOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.failureReasons.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.failureReasons.equals(fieldName)) {
             payOrder.setFailurereasons(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.platformId.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.platformId.equals(fieldName)) {
             payOrder.setPlatformId(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.price.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.price.equals(fieldName)) {
             payOrder.setPrice(new BigDecimal(ExcelUtil.getValue(fieldValue)));
-        }else if (ExcelFieldEnum.type.equals(fieldName)) {
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.type.equals(fieldName)) {
             payOrder.setType(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
-        }else if (ExcelFieldEnum.payTime.equals(fieldName)) {
-            payOrder.setPayTime(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.createTime.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.updateTime.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.returnUrl.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.notifyUrl.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.deleteFlag.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.merchantId.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.productId.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.royaltyFlag.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.digestAlg.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.proCount.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.order_Type.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.merchantUrl.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
-        }else if (ExcelFieldEnum.status.equals(fieldName)) {
-            payOrder.setOrderid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.payTime.equals(fieldName)) {
+            payOrder.setPayTime(simpleDateFormat.parse(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.createTime.equals(fieldName)) {
+            payOrder.setCreateTime(simpleDateFormat.parse(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.updateTime.equals(fieldName)) {
+            payOrder.setUpdateTime(simpleDateFormat.parse(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.returnUrl.equals(fieldName)) {
+            payOrder.setReturnUrl(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.notifyUrl.equals(fieldName)) {
+            payOrder.setNotifyUrl(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.deleteFlag.equals(fieldName)) {
+            payOrder.setDeleteFlag(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.merchantId.equals(fieldName)) {
+            payOrder.setMerchantid(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.productId.equals(fieldName)) {
+            payOrder.setProductid(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.royaltyFlag.equals(fieldName)) {
+            payOrder.setRoyaltyFlag(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.digestAlg.equals(fieldName)) {
+            payOrder.setDigestAlg(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.proCount.equals(fieldName)) {
+            payOrder.setProCount(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.order_Type.equals(fieldName)) {
+            payOrder.setOrderType(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.merchantUrl.equals(fieldName)) {
+            payOrder.setMerchantUrl(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.status.equals(fieldName)) {
+            //// TODO: 2016/7/19 此处有bug，需要判空，以后改
+            payOrder.setStatus(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
         }
 
-        // TODO: 2016/7/18
-        //...
 
     }
 }

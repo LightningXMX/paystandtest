@@ -1,22 +1,21 @@
 package com.cmcc.pay.model.compareresult;
 
 import com.cmcc.pay.model.biz.PaySettle;
-
-import java.io.PipedReader;
+import com.cmcc.pay.model.biz.PaySettleSummary;
 
 /**
  * Created by LIGHTNING on 2016/7/17.
  */
-public class PaySettleTestResult {
+public class PaySettleSummaryTestResult {
     private boolean testResult;
     private String msg;
-    private PaySettle dbResult;
+    private PaySettleSummary dbResult;
 
-    public PaySettle getDbResult() {
+    public PaySettleSummary getDbResult() {
         return dbResult;
     }
 
-    public void setDbResult(PaySettle dbResult) {
+    public void setDbResult(PaySettleSummary dbResult) {
         this.dbResult = dbResult;
     }
 

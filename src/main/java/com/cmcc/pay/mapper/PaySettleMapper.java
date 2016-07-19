@@ -30,6 +30,7 @@ public interface PaySettleMapper {
 
     List<PaySettle> selectByOrderid(Map<String, Object> param);
     PaySettle selectByOrderId(String orderId);
+    List<PaySettle> selectByOrderIdList(List<String> orderIdList);
 
     //结算报表-通过settleid查询名称
 //    Lisst<PayTransferReport> selectNameByIds(Map<String, Object> param);

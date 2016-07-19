@@ -53,7 +53,7 @@ public interface PayOrderMapper {
     int insert(PayOrder payOrder);
     
     //批量插入
-    int batchInsert(List<PayOrder> orders);
+    int batchInsert(@Param(value = "list")List<PayOrder> orders, @Param(value = "tableSuffix")String tableSuffix);
 
     //not use
     int deleteByPrimaryKey(Long id);

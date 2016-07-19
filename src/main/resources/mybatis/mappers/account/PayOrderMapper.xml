@@ -213,7 +213,7 @@
     </insert>
 
     <insert id="batchInsert" parameterType="java.util.List" >
-        insert into pay_order (
+        insert into pay_order_${tableSuffix} (
         id, orderid, transactionid,
         transaction_date, ordertype, orderinfo,
         account_code, account_type, pay_period,
