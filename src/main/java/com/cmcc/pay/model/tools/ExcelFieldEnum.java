@@ -7,8 +7,8 @@ package com.cmcc.pay.model.tools;
 
 public class ExcelFieldEnum {
 
-    class PayOrderExcelFieldEnum {
-        public static final String id = "id";
+    public static class   PayOrderExcelFieldEnum {
+        public static String id = "id";
 
         public static final String orderId = "orderid";
 
@@ -45,6 +45,9 @@ public class ExcelFieldEnum {
     }
 
     class PaySettleExcelFieldEnum {
+        public static final String testResult = "test_result";//结果sheet独有
+        public static final String message = "message";//结果sheet独有
+
         public static final String id = "id";
         public static final String settleId = "settleid";
         public static final String orderId = "orderid";
@@ -52,6 +55,9 @@ public class ExcelFieldEnum {
     }
 
     class PaySettleSummaryExcelFieldEnum {
+        public static final String testResult = "test_result";//结果sheet独有
+        public static final String message = "message";//结果sheet独有
+
         public static final String id = "id";
         public static final String platformId = "platform_id";
         public static final String settleId = "settleid";

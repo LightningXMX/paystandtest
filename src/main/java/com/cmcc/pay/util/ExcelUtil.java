@@ -83,7 +83,7 @@ public class ExcelUtil {
                 if (xssfRow == null) {
                     continue;
                 }
-                readRowData(xssfRow);
+//                readRowData(xssfRow);
                 xssfRowList.add(xssfRow);
             }
         return xssfRowList;

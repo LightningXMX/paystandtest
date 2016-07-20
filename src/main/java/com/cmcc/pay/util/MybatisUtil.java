@@ -17,13 +17,13 @@ public class MybatisUtil {
 
     private static SqlSessionFactory sqlSessionFactory;
 
-    static {
-        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//    static {
+//        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//
+//        initMybatis();
+//    }
 
-        initMybatis();
-    }
-
-    private static void initMybatis() {
+    public  void initMybatis() {
         String resource = "mybatis-config.xml";
         InputStream inputStream = null;
         try {
@@ -31,7 +31,7 @@ public class MybatisUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        setSqlSessionFactory(new SqlSessionFactoryBuilder().build(inputStream));
     }
 
 
@@ -39,7 +39,7 @@ public class MybatisUtil {
         return sqlSessionFactory;
     }
 
-    public static void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        MybatisUtil.sqlSessionFactory = sqlSessionFactory;
+    public void   setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 }

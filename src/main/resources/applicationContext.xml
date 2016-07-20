@@ -25,5 +25,7 @@
 
     <bean id="cfgInit" class="com.cmcc.pay.util.CfgInit" init-method="init"/>
 
+    <bean id = "MybatisUtil" class="com.cmcc.pay.util.MybatisUtil" init-method="initMybatis"/>
+
 
 </beans>

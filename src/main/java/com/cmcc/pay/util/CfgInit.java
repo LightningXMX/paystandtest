@@ -1,5 +1,8 @@
 package com.cmcc.pay.util;
 
+import com.cmcc.pay.model.tools.ExcelFieldEnum;
+import com.cmcc.pay.model.tools.ExcelInfo;
+import com.cmcc.pay.testcase.Test1;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -38,6 +41,12 @@ public class CfgInit {
         DBHelper.name =  (String) properties.get("JDBC_NAME");
         DBHelper.user =  (String) properties.get("JDBC_USER");
         DBHelper.password =  (String) properties.get("JDBC_PASSWORD");
+
+        ExcelFieldEnum.PayOrderExcelFieldEnum.id = (String) properties.get("payOrder_id");
+        ExcelInfo.ExcelFileName = (String) properties.get("ExcelFileName");
+        ExcelInfo.ExcelPayOrderSheetName = (String) properties.get("ExcelPayOrderSheetName");
+        ExcelInfo.ExcelPaySettleSheetName = (String) properties.get("ExcelPaySettleSheetName");
+        ExcelInfo.ExcelPaySettleSummarySheetName = (String) properties.get("ExcelPaySettleSummarySheetName");
 
     }
 }

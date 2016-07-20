@@ -34,7 +34,7 @@ public class TestBase {
          context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 //        initHttpClient();
-        initMybatis();
+//        initMybatis();
     }
 
     private static void initHttpClient(){
@@ -53,7 +53,15 @@ public class TestBase {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }
 
-//    protected Map<String,String> createDefaultInput(){
+    public static SqlSessionFactory getSqlSessionFactory() {
+        return sqlSessionFactory;
+    }
+
+    public static void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        TestBase.sqlSessionFactory = sqlSessionFactory;
+    }
+
+    //    protected Map<String,String> createDefaultInput(){
 //        Map<String,String> defaultInput = new HashMap();
 //
 //        defaultInput.put(AdvPayEnum.Version,"1.00");
