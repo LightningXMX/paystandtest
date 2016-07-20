@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by LIGHTNING on 2016/7/17.
+ * Created by echo on 2016/7/17.
  */
 public class PaySettleSummaryTools {
 
