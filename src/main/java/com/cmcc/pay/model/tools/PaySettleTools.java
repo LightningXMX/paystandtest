@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 
 /**
- * Created by LIGHTNING on 2016/7/17.
+ * Created by echo on 2016/7/17.
  */
 public class PaySettleTools {
     public static List<PaySettle> build(List<XSSFRow> xssfRowList) throws Exception {

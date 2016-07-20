@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by ech0 on 2016/3/13.
  */
-public class TestBase {
+public class  TestBase {
 
     protected static final String EXPECTED_RESULT = "EXPECTED_RESULT";
     protected static final String DESC = "DESC";
