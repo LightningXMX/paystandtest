@@ -1,10 +1,19 @@
 package com.cmcc.pay.model.tools;
 
+import com.cmcc.pay.mapper.PaySettleMapper;
+import com.cmcc.pay.mapper.PaySettleSummaryMapper;
 import com.cmcc.pay.model.biz.PaySettle;
 import com.cmcc.pay.model.biz.PaySettleSummary;
+import com.cmcc.pay.model.compareresult.PaySettleSummaryTestResult;
+import com.cmcc.pay.model.compareresult.PaySettleTestResult;
 import com.cmcc.pay.util.ExcelUtil;
+import com.cmcc.pay.util.MybatisUtil;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -52,5 +61,79 @@ public class PaySettleSummaryTools {
         }
 
         //// TODO: 2016/7/19
+    }
+
+    public static List<PaySettleSummaryTestResult> verificate(List<PaySettleSummary> paySettleSummaryList) {
+
+        List<PaySettleSummaryTestResult> paySettleSummaryTestResultList = new ArrayList<PaySettleSummaryTestResult>();
+        SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory();
+
+        SqlSession session = sqlSessionFactory.openSession();
+        PaySettleSummaryMapper paySettleSummaryMapper = session.getMapper(PaySettleSummaryMapper.class);
+        try {
+            for (PaySettleSummary xlsPaySettleSummary : paySettleSummaryList) {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("platformId",xlsPaySettleSummary.getPlatformId());
+                map.put("settleChannel", xlsPaySettleSummary.getSettleChannel());
+                map.put("merchantId", xlsPaySettleSummary.getMerchantId());
+
+                PaySettleSummary dbPaySettleSummary = paySettleSummaryMapper.selectByMultiCondition(map);
+                PaySettleSummaryTestResult paySettleSummaryTestResult = new PaySettleSummaryTestResult();
+
+                boolean result = false;
+                if (dbPaySettleSummary==null){
+
+                    paySettleSummaryTestResult.setMsg("There is no recode in database.");
+                }
+                result = compareValue(xlsPaySettleSummary, dbPaySettleSummary);
+                //// TODO: 2016/7/17 记录db查询到的数据到xls
+
+                paySettleSummaryTestResult.setTestResult(result);
+                paySettleSummaryTestResult.setDbResult(dbPaySettleSummary);
+                paySettleSummaryTestResultList.add(paySettleSummaryTestResult);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+
+        return paySettleSummaryTestResultList;
+    }
+
+    public static boolean compareValue(PaySettleSummary xlsPaySettleSummary, PaySettleSummary dbPaySettleSummary) {
+        boolean result = false;
+        if (dbPaySettleSummary == null) return result;//db未找到数据
+
+        if (!xlsPaySettleSummary.getPlatformId().equals(dbPaySettleSummary.getPlatformId())) return false;
+
+        if (!xlsPaySettleSummary.getSettleid().equals(dbPaySettleSummary.getSettleid())) return false;
+        //// TODO: 2016/7/17 ...
+
+
+        return true;
+    }
+
+    public static void fillExcelWithResult(String filePath, List<PaySettleSummaryTestResult> paySettleSummaryTestResultList) {
+
+        XSSFWorkbook xssfWorkbook = ExcelUtil.readTestData(filePath);
+        XSSFSheet xssfSheet = xssfWorkbook.getSheet("pay_settle_summary_result");
+        //// TODO: 2016/7/20 有待优化
+        for (int i = 0; i < paySettleSummaryTestResultList.size(); i++) {
+            PaySettleSummaryTestResult paySettleSummaryTestResult = paySettleSummaryTestResultList.get(0);
+            PaySettleSummary dbPaySettleSummaryTestResult = paySettleSummaryTestResult.getDbResult();
+            XSSFRow xssfRow = xssfSheet.createRow(i + 1);
+            xssfRow.createCell(0).setCellValue(paySettleSummaryTestResult.isTestResult());
+            xssfRow.createCell(1).setCellValue(paySettleSummaryTestResult.getMsg());
+            xssfRow.createCell(2).setCellValue(dbPaySettleSummaryTestResult.getId());
+            xssfRow.createCell(3).setCellValue(dbPaySettleSummaryTestResult.getSettleid());
+            xssfRow.createCell(4).setCellValue(dbPaySettleSummaryTestResult.getMerchantId());
+            xssfRow.createCell(5).setCellValue(dbPaySettleSummaryTestResult.getMerchantId());
+            xssfRow.createCell(6).setCellValue(dbPaySettleSummaryTestResult.getSettleChannel());
+
+
+        }
+        ExcelUtil.writeTestData(filePath, xssfWorkbook);
     }
 }
