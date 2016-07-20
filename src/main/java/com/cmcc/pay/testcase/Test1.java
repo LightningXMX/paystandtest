@@ -17,6 +17,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,8 @@ import java.util.List;
  * Created by LIGHTNING on 2016/7/16.
  */
 public class Test1 extends TestBase{
+
+    private Logger logger = LoggerFactory.getLogger(Test1.class);
 
 //    public static String ExcelFileName = "";
 //    public static String ExcelPayOrderSheetName = "";
@@ -59,6 +63,8 @@ public class Test1 extends TestBase{
             System.out.println(i);
         } catch (Throwable e) {
             e.printStackTrace();
+            logger.error("insert testcase fail.");
+            return;
         } finally {
             session.close();
         }

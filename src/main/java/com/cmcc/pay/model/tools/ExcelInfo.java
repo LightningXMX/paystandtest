@@ -9,4 +9,6 @@ public class ExcelInfo {
     public static String ExcelPayOrderSheetName = "";
     public static String ExcelPaySettleSheetName = "";
     public static String ExcelPaySettleSummarySheetName = "";
+    public static String ExcelPaySettleResultSheetName = "";
+    public static String ExcelPaySettleSummaryResultSheetName = "";
 }

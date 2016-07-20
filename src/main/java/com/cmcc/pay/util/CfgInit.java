@@ -42,11 +42,16 @@ public class CfgInit {
         DBHelper.user =  (String) properties.get("JDBC_USER");
         DBHelper.password =  (String) properties.get("JDBC_PASSWORD");
 
-        ExcelFieldEnum.PayOrderExcelFieldEnum.id = (String) properties.get("payOrder_id");
+
         ExcelInfo.ExcelFileName = (String) properties.get("ExcelFileName");
         ExcelInfo.ExcelPayOrderSheetName = (String) properties.get("ExcelPayOrderSheetName");
         ExcelInfo.ExcelPaySettleSheetName = (String) properties.get("ExcelPaySettleSheetName");
         ExcelInfo.ExcelPaySettleSummarySheetName = (String) properties.get("ExcelPaySettleSummarySheetName");
+        ExcelInfo.ExcelPaySettleResultSheetName = (String) properties.get("ExcelPaySettleResultSheetName");
+        ExcelInfo.ExcelPaySettleSummaryResultSheetName = (String) properties.get("ExcelPaySettleSummaryResultSheetName");
 
+        if (properties.get("payOrder_id")!=null) {
+            ExcelFieldEnum.PayOrderExcelFieldEnum.id = (String) properties.get("payOrder_id");
+        }
     }
 }

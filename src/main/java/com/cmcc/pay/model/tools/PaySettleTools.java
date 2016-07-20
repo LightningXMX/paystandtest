@@ -107,24 +107,51 @@ public class PaySettleTools {
 
     public static void fillExcelWithResult(String filePath, List<PaySettleTestResult> paySettleTestResultList) {
 
-//        String fileName = "testdata/payaccount-testdata.xlsx";
         XSSFWorkbook xssfWorkbook = ExcelUtil.readTestData(filePath);
-        XSSFSheet xssfSheet = xssfWorkbook.getSheet("pay_settle_result");
-        //// TODO: 2016/7/20 有待优化
-        for (int i = 0; i < paySettleTestResultList.size(); i++) {
-            PaySettleTestResult paySettleTestResult = paySettleTestResultList.get(0);
-            PaySettle dbPaySettle = paySettleTestResult.getDbResult();
-            XSSFRow xssfRow = xssfSheet.createRow(i + 1);
-            xssfRow.createCell(0).setCellValue(paySettleTestResult.isTestResult());
-            xssfRow.createCell(1).setCellValue(paySettleTestResult.getMsg());
-            xssfRow.createCell(2).setCellValue(dbPaySettle.getId());
-            xssfRow.createCell(3).setCellValue(dbPaySettle.getSettleid());
-            xssfRow.createCell(4).setCellValue(dbPaySettle.getOrderid());
-            xssfRow.createCell(5).setCellValue(dbPaySettle.getMerchantId());
-            xssfRow.createCell(6).setCellValue(dbPaySettle.getProductId());
+        XSSFSheet xssfSheet = xssfWorkbook.getSheet(ExcelInfo.ExcelPaySettleResultSheetName);
+        List<XSSFRow> xssfRowList = ExcelUtil.convertXLS(xssfWorkbook, "pay_settle_summary_result");
+        XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
+        Map<Integer, String> xlsFieldMap = new HashMap<Integer, String>();
+        for (int i = 1; i <= firstXssfRow.getLastCellNum(); i++) {
+            xlsFieldMap.put(i, ExcelUtil.getValue(firstXssfRow.getCell(i - 1)));
+        }
 
+        for (int i = 0; i < paySettleTestResultList.size(); i++) {
+            PaySettleTestResult paySettleTestResult = paySettleTestResultList.get(i);
+//            PaySettleSummary dbPaySettleSummaryTestResult = paySettleSummaryTestResult.getDbResult();//dbPaySettleSummaryTestResult有可能为空
+            XSSFRow xssfRow = xssfSheet.createRow(i + 1);
+
+            for (Map.Entry<Integer, String> integerStringEntry : xlsFieldMap.entrySet()) {
+                int fieldNo = integerStringEntry.getKey();
+                String fieldName = integerStringEntry.getValue();
+                xssfRow.createCell(fieldNo - 1).setCellValue(getCellValue(fieldName, paySettleTestResult));
+
+
+            }
 
         }
         ExcelUtil.writeTestData(filePath, xssfWorkbook);
+    }
+
+    public static String getCellValue(String fieldName, PaySettleTestResult paySettleTestResult) {
+
+        if (StringUtils.isEmpty(paySettleTestResult)) return "";
+
+        if (ExcelFieldEnum.PaySettleExcelFieldEnum.testResult.equals(fieldName)) {
+            return String.valueOf(paySettleTestResult.isTestResult());
+        } else if (ExcelFieldEnum.PaySettleExcelFieldEnum.message.equals(fieldName)) {
+            return paySettleTestResult.getMsg();
+        }
+
+        if (paySettleTestResult.getDbResult() == null) {
+            return "";
+        }
+        if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.id.equals(fieldName)) {
+            return String.valueOf(paySettleTestResult.getDbResult().getId());
+        } else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.platformId.equals(fieldName)) {
+            return paySettleTestResult.getDbResult().getPlatformId();
+        }
+        // TODO: 16/7/20
+        return "";
     }
 }

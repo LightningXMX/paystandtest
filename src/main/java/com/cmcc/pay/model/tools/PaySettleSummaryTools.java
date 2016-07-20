@@ -116,15 +116,14 @@ public class PaySettleSummaryTools {
     public static void fillExcelWithResult(String filePath, List<PaySettleSummaryTestResult> paySettleSummaryTestResultList) {
 
         XSSFWorkbook xssfWorkbook = ExcelUtil.readTestData(filePath);
-        XSSFSheet xssfSheet = xssfWorkbook.getSheet("pay_settle_summary_result");
-        List<XSSFRow> xssfRowList = ExcelUtil.convertXLS(xssfWorkbook, "pay_settle_summary_result");
+        XSSFSheet xssfSheet = xssfWorkbook.getSheet(ExcelInfo.ExcelPaySettleSummaryResultSheetName);
+        List<XSSFRow> xssfRowList = ExcelUtil.convertXLS(xssfWorkbook, ExcelInfo.ExcelPaySettleSummaryResultSheetName);
         XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
         Map<Integer, String> xlsFieldMap = new HashMap<Integer, String>();
         for (int i = 1; i <= firstXssfRow.getLastCellNum(); i++) {
             xlsFieldMap.put(i, ExcelUtil.getValue(firstXssfRow.getCell(i - 1)));
         }
 
-        //// TODO: 2016/7/20 有待优化
         for (int i = 0; i < paySettleSummaryTestResultList.size(); i++) {
             PaySettleSummaryTestResult paySettleSummaryTestResult = paySettleSummaryTestResultList.get(i);
 //            PaySettleSummary dbPaySettleSummaryTestResult = paySettleSummaryTestResult.getDbResult();//dbPaySettleSummaryTestResult有可能为空
