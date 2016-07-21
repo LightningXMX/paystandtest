@@ -1,7 +1,7 @@
 package com.cmcc.pay.model.tools;
 
 /**
- * Created by mingxin on 16/7/20.
+ * Created by echo on 16/7/20.
  */
 public class ExcelInfo {
 
