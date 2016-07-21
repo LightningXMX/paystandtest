@@ -1,0 +1,10 @@
+1.testdata路径下payaccount-testdata.xlsx文件中的字段列补充完整
+2.excel中的字段在配置文件中补完
+3.initconig中补完映射关系 ExcelFieldEnum中是运行时最终的映射表
+4.com.cmcc.pay.model.tools.PaySettleTools.setPaySettleFiled 将excle值放入对象中补完
+5.com.cmcc.pay.model.tools.PaySettleTools.compareValue 比较excel和数据库值补完
+6.com.cmcc.pay.model.tools.PaySettleTools.getCellValue 比较结果写入excel补完
+7.以上456项在com.cmcc.pay.model.tools.PaySettleSummaryTools类中根据自身的属性也补完
+8.删除测试数据实现方案待讨论
+9.查询db paysettleSummeray条件代确定,查询条件写在com.cmcc.pay.model.tools.PaySettleSummaryTools.verificate
+具体sql在PaySettleSummayMapper.xml,sql:selectByMultiCondition

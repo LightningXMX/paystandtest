@@ -118,7 +118,6 @@ public class PaySettleTools {
 
         for (int i = 0; i < paySettleTestResultList.size(); i++) {
             PaySettleTestResult paySettleTestResult = paySettleTestResultList.get(i);
-//            PaySettleSummary dbPaySettleSummaryTestResult = paySettleSummaryTestResult.getDbResult();//dbPaySettleSummaryTestResult有可能为空
             XSSFRow xssfRow = xssfSheet.createRow(i + 1);
 
             for (Map.Entry<Integer, String> integerStringEntry : xlsFieldMap.entrySet()) {

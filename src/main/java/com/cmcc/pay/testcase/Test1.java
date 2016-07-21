@@ -40,7 +40,7 @@ public class Test1 extends TestBase {
 
         boolean isSuccess = PayOrderTools.insertTestData(payOrderList);
         if (!isSuccess) {
-            logger.error("insert testcase fail.");
+            logger.error("insert testdata fail.");
             return;
         }
 
