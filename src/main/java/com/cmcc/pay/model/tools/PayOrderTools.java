@@ -1,18 +1,21 @@
 package com.cmcc.pay.model.tools;
 
+import com.cmcc.pay.mapper.PayOrderMapper;
 import com.cmcc.pay.model.biz.PayOrder;
 import com.cmcc.pay.util.ExcelUtil;
+import com.cmcc.pay.util.MybatisUtil;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.poi.util.StringUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by echo on 2016/7/17.
@@ -20,6 +23,25 @@ import java.util.Map;
 public class PayOrderTools {
 
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static Logger logger = LoggerFactory.getLogger(PayOrderTools.class);
+
+    public static boolean  insertTestData(List<PayOrder> payOrderList) {
+        SqlSessionFactory sqlSessionFactory =  MybatisUtil.getSqlSessionFactory();
+        SqlSession session = sqlSessionFactory.openSession(true);
+        try {
+            PayOrderMapper payOrderMapper = session.getMapper(PayOrderMapper.class);
+            int i =payOrderMapper.batchInsert(payOrderList,new SimpleDateFormat("yyMM").format(new Date()));
+            logger.info("success insert "+i+" record.");
+            return true;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            logger.error("insert testcase fail.");
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
 
     public static List<PayOrder> build(List<XSSFRow> xssfRowList) throws Exception {
         XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
