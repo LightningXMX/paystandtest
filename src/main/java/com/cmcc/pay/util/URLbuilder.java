@@ -24,7 +24,7 @@ public class URLbuilder {
                 xml = "";
             }
             String encodedXML = URLEncoder.encode(xml, "UTF-8");
-            url = "http://" + HOST + ":" + PORT + PATH + encodedXML;
+            url = "http://" + HOST + ":" + PORT +PATH + encodedXML;
             System.out.println(url);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

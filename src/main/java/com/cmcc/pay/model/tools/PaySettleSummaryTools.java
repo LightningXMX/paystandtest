@@ -13,6 +13,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.StringUtils;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.Map;
  * Created by echo on 2016/7/17.
  */
 public class PaySettleSummaryTools {
+
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static List<PaySettleSummary> build(List<XSSFRow> xssfRowList) throws Exception {
         XSSFRow firstXssfRow = xssfRowList.get(0);//获取第一行字段
@@ -56,9 +60,43 @@ public class PaySettleSummaryTools {
             paySettleSummary.setPlatformId(ExcelUtil.getValue(fieldValue));
         } else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.settleId.equals(fieldName)) {
             paySettleSummary.setSettleid(ExcelUtil.getValue(fieldValue));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.merchantId.equals(fieldName)) {
+            paySettleSummary.setMerchantId(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.productType.equals(fieldName)) {
+            paySettleSummary.setProductType(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.transferType.equals(fieldName)) {
+            paySettleSummary.setTransferType(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.settleChannel.equals(fieldName)) {
+            paySettleSummary.setSettleChannel(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.totalFee.equals(fieldName)) {
+            paySettleSummary.setTotalFee(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.incomeFee.equals(fieldName)) {
+            paySettleSummary.setIncomeFee(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.merchantFee.equals(fieldName)) {
+            paySettleSummary.setMerchantFee(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.serviceFee.equals(fieldName)) {
+            paySettleSummary.setServiceFee(Long.parseLong(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.type.equals(fieldName)) {
+            paySettleSummary.setType(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
         }
 
-        //// TODO: 2016/7/19
+        else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.settlePeriod.equals(fieldName)) {
+            paySettleSummary.setSettlePeriod(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.status.equals(fieldName)) {
+            paySettleSummary.setStatus(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.auditDate.equals(fieldName)) {
+            paySettleSummary.setAuditDate(Date.valueOf(ExcelUtil.getValue(fieldValue)));//////此处需要仔细验证
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.deleteFlag.equals(fieldName)) {
+            paySettleSummary.setDeleteFlag(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+        }
+
+        else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.createTime.equals(fieldName)) {
+            paySettleSummary.setCreateTime(Date.valueOf(ExcelUtil.getValue(fieldValue)));//////此处需要仔细验证
+        }else if (ExcelFieldEnum.PaySettleSummaryExcelFieldEnum.updateTime.equals(fieldName)) {
+            paySettleSummary.setUpdateTime(simpleDateFormat.parse(ExcelUtil.getValue(fieldValue)));
+        }
+
+
     }
 
     public static List<PaySettleSummaryTestResult> verificate(List<PaySettleSummary> paySettleSummaryList) {
@@ -107,8 +145,34 @@ public class PaySettleSummaryTools {
         if (!xlsPaySettleSummary.getPlatformId().equals(dbPaySettleSummary.getPlatformId())) return false;
 
         if (!xlsPaySettleSummary.getSettleid().equals(dbPaySettleSummary.getSettleid())) return false;
-        //// TODO: 2016/7/17 ...
 
+        if (!xlsPaySettleSummary.getMerchantId().equals(dbPaySettleSummary.getMerchantId())) return false;
+
+        if (!xlsPaySettleSummary.getProductType().equals(dbPaySettleSummary.getProductType())) return false;
+
+        if (!xlsPaySettleSummary.getTransferType().equals(dbPaySettleSummary.getTransferType())) return false;
+
+        if (!xlsPaySettleSummary.getSettleChannel().equals(dbPaySettleSummary.getSettleChannel())) return false;
+
+        if (!xlsPaySettleSummary.getTotalFee().equals(dbPaySettleSummary.getTotalFee())) return false;
+
+        if (!xlsPaySettleSummary.getIncomeFee().equals(dbPaySettleSummary.getIncomeFee())) return false;
+
+        if (!xlsPaySettleSummary.getMerchantFee().equals(dbPaySettleSummary.getMerchantFee())) return false;
+
+        if (!xlsPaySettleSummary.getServiceFee().equals(dbPaySettleSummary.getServiceFee())) return false;
+
+        if (!xlsPaySettleSummary.getType().equals(dbPaySettleSummary.getType())) return false;
+
+        if (!xlsPaySettleSummary.getSettlePeriod().equals(dbPaySettleSummary.getSettlePeriod())) return false;
+
+        if (!xlsPaySettleSummary.getStatus().equals(dbPaySettleSummary.getStatus())) return false;
+
+        if (!xlsPaySettleSummary.getAuditDate().equals(dbPaySettleSummary.getAuditDate())) return false;
+
+        if (!xlsPaySettleSummary.getDeleteFlag().equals(dbPaySettleSummary.getDeleteFlag())) return false;
+
+        if (!xlsPaySettleSummary.getDeleteFlag().equals(dbPaySettleSummary.getDeleteFlag())) return false;
 
         return true;
     }

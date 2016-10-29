@@ -5,10 +5,11 @@ package com.cmcc.pay.model.tools;
  */
 public class ExcelInfo {
 
-    public static String ExcelFileName = "";
+    public static String ExcelAccountFileName = "";
     public static String ExcelPayOrderSheetName = "";
     public static String ExcelPaySettleSheetName = "";
     public static String ExcelPaySettleSummarySheetName = "";
     public static String ExcelPaySettleResultSheetName = "";
     public static String ExcelPaySettleSummaryResultSheetName = "";
+    public static String ExcelPayFilename = "";
 }

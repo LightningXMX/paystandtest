@@ -1,4 +1,4 @@
-1.testdata路径下payaccount-testdata.xlsx文件中的字段列补充完整
+
 2.excel中的字段在配置文件中补完
 3.initconig中补完映射关系 ExcelFieldEnum中是运行时最终的映射表
 4.com.cmcc.pay.model.tools.PaySettleTools.setPaySettleFiled 将excle值放入对象中补完

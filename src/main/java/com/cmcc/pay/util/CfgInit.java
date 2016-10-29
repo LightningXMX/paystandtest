@@ -2,7 +2,6 @@ package com.cmcc.pay.util;
 
 import com.cmcc.pay.model.tools.ExcelFieldEnum;
 import com.cmcc.pay.model.tools.ExcelInfo;
-import com.cmcc.pay.testcase.Test1;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
