@@ -101,4 +101,6 @@ public interface PayOrderMapper {
     Double queryPayOrderCountLast(@Param(value = "payOrder") PayOrder payOrder,
                               @Param(value = "monthDay") String monthDay);
 
+    void deleteAllPay(@Param(value = "tableSuffix")String tableSuffix);
+
 }

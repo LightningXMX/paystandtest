@@ -377,8 +377,7 @@
         select
         <include refid="Base_Column_List" />
         from pay_settle_summary
-        where settleid like #{settleid,jdbcType=VARCHAR}
-        and merchant_id=#{merchantId,jdbcType=BIGINT}
+        where merchant_id=#{merchantId,jdbcType=BIGINT}
         and platform_id=#{platformId,jdbcType=VARCHAR}
         and product_type=#{productType,jdbcType=INTEGER}
         and settle_channel=#{settleChannel,jdbcType=INTEGER}
@@ -386,6 +385,10 @@
         and settle_period=#{settlePeriod,jdbcType=INTEGER}
         and delete_flag = 0
         limit 0,1
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        select count(*) from pay_settle_summary
     </select>
   
 </mapper>

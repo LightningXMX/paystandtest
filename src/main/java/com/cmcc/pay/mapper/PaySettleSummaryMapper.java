@@ -58,4 +58,6 @@ public interface PaySettleSummaryMapper {
     List<PaySettleSummary> selectByTimeOther(Map<String, Object> param);
 
     PaySettleSummary selectByMultiCondition(Map<String, Object> param);
+
+    long countAll();
 }

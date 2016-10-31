@@ -129,7 +129,9 @@ public class PayOrderTools {
             payOrder.setMerchantUrl(ExcelUtil.getValue(fieldValue));
         }else if (ExcelFieldEnum.PayOrderExcelFieldEnum.status.equals(fieldName)) {
             //// TODO: 2016/7/19 此处有bug，需要判空，以后改
-            payOrder.setStatus(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+            if(!StringUtils.isEmpty(ExcelUtil.getValue(fieldValue))) {
+                payOrder.setStatus(Integer.parseInt(ExcelUtil.getValue(fieldValue)));
+            }
         }
 
 

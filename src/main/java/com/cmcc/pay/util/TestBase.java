@@ -3,6 +3,7 @@ package com.cmcc.pay.util;
 //import com.cmcc.pay.paystand.test.xml.module.AdvPay;
 //import com.cmcc.pay.paystand.test.xml.module.AdvPayBuilder;
 //import com.cmcc.pay.paystand.test.xml.module.AdvPayEnum;
+import com.cmcc.pay.model.tools.ExcelInfo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -105,5 +107,18 @@ public class  TestBase {
 //
 //        return response;
 return null;
+    }
+
+
+
+    protected String getFilePath(String filename) {
+        String filePath = new StringBuilder().
+                append(System.getProperty("user.dir")).append(File.separator)
+                .append("src").append(File.separator)
+                .append("main").append(File.separator)
+                .append("resources").append(File.separator)
+                .append("testdata").append(File.separator)
+                .append(filename).toString();
+        return filePath;
     }
 }

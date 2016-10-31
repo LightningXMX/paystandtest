@@ -77,7 +77,7 @@ public class Test1 extends TestBase {
                 .append("main").append(File.separator)
                 .append("resources").append(File.separator)
                 .append("testdata").append(File.separator)
-                .append(ExcelInfo.ExcelFileName).toString();
+                .toString();
         return filePath;
     }
 }

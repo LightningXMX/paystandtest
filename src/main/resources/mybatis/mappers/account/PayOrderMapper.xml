@@ -977,4 +977,8 @@
         delete from pay_order where trade_no = #{tradeNo,jdbcType=VARCHAR}
     </delete>
 
+    <delete id="deleteAllPay" parameterType="java.lang.String">
+        delete from pay_order_${tableSuffix}
+    </delete>
+
 </mapper>
